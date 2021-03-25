@@ -7,6 +7,7 @@ public abstract class AbstractSolver {
     protected final String filePath;
     protected final String options;
     private Process proc;
+    protected String output;
 
     /**
      * Constructeur général de solveur de programme linéaire
@@ -16,6 +17,7 @@ public abstract class AbstractSolver {
     public AbstractSolver(String filePath, String options) {
         this.filePath = filePath;
         this.options = options;
+        this.output = "";
     }
 
     /**
@@ -42,6 +44,7 @@ public abstract class AbstractSolver {
         String s;
         while ((s = stdInput.readLine()) != null) {
             System.out.println(s);
+            output += s;
         }
 
         if((s = stdError.readLine()) != null) {
