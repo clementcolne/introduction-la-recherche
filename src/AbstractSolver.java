@@ -6,18 +6,20 @@ public abstract class AbstractSolver {
 
     protected final String filePath;
     protected final String options;
+    protected final String solver;
     private Process proc;
     protected String output;
 
     /**
      * Constructeur général de solveur de programme linéaire
      * @param filePath chemin du fichier
-     * @param options options du solveur
+    // * @param options options du solveur
      */
-    public AbstractSolver(String filePath, String options) {
+    public AbstractSolver(String filePath, String options, String solver) {
         this.filePath = filePath;
         this.options = options;
         this.output = "";
+        this.solver = solver;
     }
 
     /**
@@ -27,7 +29,7 @@ public abstract class AbstractSolver {
     public void run() throws IOException {
         Runtime rt = Runtime.getRuntime();
         // command to run lp solve
-        String[] commands = {"lp_solve", options, filePath};
+        String[] commands = {solver, options, filePath};
         // run command
         proc = rt.exec(commands);
     }
@@ -43,8 +45,9 @@ public abstract class AbstractSolver {
         // read the output from the command
         String s;
         while ((s = stdInput.readLine()) != null) {
-            System.out.println(s);
+            //System.out.println(s);
             output += s;
+            output += "\n";
         }
 
         if((s = stdError.readLine()) != null) {
@@ -55,5 +58,11 @@ public abstract class AbstractSolver {
             }
         }
     }
+
+    public int computeManhattanDistance(){
+        return 0;
+    }
+
+    public abstract void parseOutput();
 
 }

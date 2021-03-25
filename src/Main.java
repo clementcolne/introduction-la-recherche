@@ -12,7 +12,7 @@ public class Main {
         // get file path
         String filePath = "../" + args[1];
         // default value if no option specified
-        String options = "-S2";
+        String options = "-S7";
         if(args.length == 3) {
             options = args[2];
         }
@@ -20,9 +20,9 @@ public class Main {
         AbstractSolver solver = null;
 
         switch (solveur) {
-            // Lp Solve solver
+            // Lp Solve solver on mac
             case "lp_solve":
-                solver = new Lpsolve(filePath, options);
+                solver = new Lpsolve(filePath, options, solveur);
                 break;
             default:
                 System.err.println("Error unknown solver : Please");
@@ -34,8 +34,9 @@ public class Main {
             // run lp solve
             solver.run();
             solver.display();
+            solver.parseOutput();
         } catch (IOException e) {
-            System.err.println("Error file not fount : The file " + filePath + " was not found.");
+            System.err.println("Error file not found : The file " + filePath + " was not found.");
         }
     }
 
