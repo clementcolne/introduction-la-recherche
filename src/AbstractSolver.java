@@ -47,7 +47,7 @@ public abstract class AbstractSolver {
         while ((s = stdInput.readLine()) != null) {
             //System.out.println(s);
             output += s;
-            output += "\n";
+            //output += "\n";
         }
 
         if((s = stdError.readLine()) != null) {
@@ -59,10 +59,17 @@ public abstract class AbstractSolver {
         }
     }
 
+    /**
+     * Méthode permettant de calculer la distance de Manhattan entre deux points donnés
+     * @return la distance de Manhattan entre deux points donnés
+     */
     public int computeManhattanDistance(){
         return 0;
     }
 
+    /**
+     * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
+     */
     public abstract void parseOutput();
 
 }

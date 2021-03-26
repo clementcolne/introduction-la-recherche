@@ -14,49 +14,35 @@ public class Lpsolve extends AbstractSolver {
         super(filePath, options, solver);
     }
 
+    /**
+     * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
+     */
     public void parseOutput(){
         StringBuilder stringBuilder = new StringBuilder();
         int[] maxX = new int[2];
         int[] minX = new int[2];
         int i = 0;
         int j = 0;
-        String[] s = output.split("\n");
+        String[] s = output.split(" ");
         for (String s1 : s){
             if (s1.matches(".*infeasible.*")) {
                 stringBuilder.append(s1);
             }else {
+                // On cherche la ligne correspondant aux valeurs optmales réalisable des variable dans le résultat du programme linéaire
                 if (s1.matches("x[0-9][ ]*[0-9]")) {
+                    // On récupère la valeur optimale réalisable de la variable
                     Pattern pattern = Pattern.compile(" [0-9]");
                     Matcher matcher = pattern.matcher(s1);
                     if (matcher.find()) {
                         maxX[i] = Integer.parseInt(matcher.group(0).split(" ")[1]);
                         stringBuilder.append("x");
-                        stringBuilder.append((i+1));
+                        stringBuilder.append((i + 1));
                         stringBuilder.append(" = ");
                         stringBuilder.append(maxX[i]);
                         stringBuilder.append("\n");
                         i++;
                     }
                 }
-                /*if (s1.matches("[c][0-9][ ]*[0-9][ ]*[0-9][ ]*.*")) {
-                    Pattern pattern = Pattern.compile("[ ]*[0-9][ ]*[0-9][ ]*");
-                    Matcher matcher = pattern.matcher(s1);
-                    if (matcher.find()) {
-                        System.out.println(matcher.group());
-                        /*String[] strings = matcher.group(0).split(" ");
-                        for (String s2 : strings){
-                            System.out.println(s2);
-                        }*/
-                        //minX[j] = Integer.parseInt(matcher.group(0).split(" ")[1]);
-                        /*stringBuilder.append("x");
-                        stringBuilder.append((j+1));
-                        stringBuilder.append(" = ");
-                        stringBuilder.append(minX[j]);
-                        stringBuilder.append("\n");
-                        System.out.println(minX[j]);
-                        j++;
-                    }
-                }*/
             }
         }
         System.out.println(stringBuilder.toString());
