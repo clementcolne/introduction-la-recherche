@@ -47,7 +47,7 @@ public abstract class AbstractSolver {
         while ((s = stdInput.readLine()) != null) {
             //System.out.println(s);
             output += s;
-            //output += "\n";
+            output += "\n";
         }
 
         if((s = stdError.readLine()) != null) {
