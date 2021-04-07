@@ -10,7 +10,7 @@ public class Main {
         // get solver executable
         String solveur = args[0];
         // get file path
-        String filePath = "../" + args[1];
+        String filePath = "./" + args[1];
         // default value if no option specified
         String options = "-S7";
         if(args.length == 3) {
@@ -32,6 +32,7 @@ public class Main {
         // execute solve
         try {
             // run lp solve
+            solver.createLpFile();
             solver.run();
             solver.display();
             solver.parseOutput();
