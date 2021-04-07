@@ -21,6 +21,86 @@ public class Lpsolve extends AbstractSolver {
     }
 
     /**
+     * Méthode permettant de créer un fichier lp depuis un fichier texte
+     */
+    public void createLpFile() {
+        try {
+            lpFile = "./test.lp";
+            FileWriter myWriter = new FileWriter(lpFile);
+            File file = new File(filePath);
+            Scanner myReader = new Scanner(file);
+            int cpt = 1;
+            // On créé un fichier lp grâce aux informations du fichier texte
+            while(myReader.hasNext()){
+                String data = myReader.nextLine();
+                // On regarde si on minimise ou maximis ela fonction de coût
+                if (data.equals("min")){
+                    myWriter.write("min: ");
+                }else if (data.equals("max")){
+                    myWriter.write("max: ");
+                }
+
+                // On regarde si la ligne correspond à la fonction
+                if (data.equals("// fonction")){
+                    data = myReader.nextLine();
+                    String[] dataTab = data.split(" ");
+                    nbVariables = dataTab.length;
+                    int i = 0;
+                    // On écrit la fonction
+                    for (String s : dataTab) {
+                        myWriter.write("x"+(i+1));
+                        if (i < dataTab.length-1){
+                            myWriter.write(" + ");
+                        }
+                        i++;
+                    }
+                    myWriter.write(";\n");
+                    for (i = 0; i < nbVariables; i++){
+                        myWriter.write("c"+cpt+": "+"x"+cpt+" = "+dataTab[i]+";\n");
+                        cpt++;
+                    }
+                }
+
+
+
+                // On vérifie les contraintes
+                if (data.matches("\\/\\/ c[0-9]*.*")){
+                    myWriter.write("c"+cpt+": ");
+                    String inequality = "";
+                    if (data.matches(".*inf")) {
+                        inequality = "<=";
+                    }
+                    if (data.matches(".*sup")) {
+                        inequality = ">=";
+                    }
+                    if (data.matches(".*eq")) {
+                        inequality = "=";
+                    }
+                    data = myReader.nextLine();
+                    String[] dataTab = data.split(" ");
+                    int i = 0;
+                    // On écrit la fonction
+                    for (String s : dataTab) {
+                        myWriter.write(s);
+                        if (i < dataTab.length-2){
+                            myWriter.write(" + ");
+                        }else if (i < dataTab.length-1){
+                            myWriter.write(" "+inequality+" ");
+                        }
+                        i++;
+                    }
+                    cpt++;
+                    myWriter.write(";\n");
+                }
+            }
+            myWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
      */
     public void parseOutput(){
@@ -29,130 +109,65 @@ public class Lpsolve extends AbstractSolver {
         int end = 0;
         StringBuilder function = new StringBuilder();
         String optimisation = "";
-
+        boolean infeasible = false, unbounded = false, right = false;
         // On sépare les lignes du fichier en tableau de String
         String[] lpOutput = output.split("\n");
-        for (String s1 : lpOutput){
+
+        for (String s : lpOutput) {
             // Le problème n'est pas faisable (la solution n'est pas réalisable ou MRU est incohérent)
-            if (s1.matches(".*infeasible.*")) {
-                stringBuilder.append(s1);
-                stringBuilder.append("\nTrying to optimize the solution\n");
-
-                // On lit le fichier lp pour récupérer les valeurs fournies
-                try {
-                    File file = new File(lpFile);
-                    Scanner myReader = new Scanner(file);
-                    while (myReader.hasNextLine()) {
-                        String data = myReader.nextLine();
-                        // On ne travaille sur la fonction de coût afin de récupérer les variables
-
-                        // On regarde ici si l'optimisation est une recherche de minimum
-                        if (data.matches("min.*")) {
-                            optimisation = "min";
-                            // On sépare le type d'optimisation de la fonction
-                            String[] lineOutput = data.split("[ ]*:[ ]*");
-
-                            // On sépare les différentes valeur dans la fonction
-                            String[] variables = lineOutput[1].split("[ ]*\\+[ ]*");
-                            function.append(optimisation);
-                            function.append(": ");
-                            int cpt = 0;
-
-                            // On reconstruit la fonction de cout en remlaçant les valeurs par des variables
-                            for (String s2 : variables) {
-                                if (s2.matches("[0-9]*x[1-9]*")){
-                                    start++;
-                                    function.append(s2);
-                                }
-                                if (s2.matches("[0-9]*[;]?")){
-                                    end++;
-                                    function.append("x");
-                                    function.append(start+end);
-                                }
-                                if (cpt < variables.length-1) {
-                                    function.append(" + ");
-                                }
-                                cpt++;
-                            }
-                            function.append(";");
-                            stringBuilder.append(data);
-                        }
+            if (s.matches(".*infeasible.*")) {
+                infeasible = true;
+            } else if (s.matches(".*unbounded.*")) { // On vérifie si le problème est borné
+                unbounded = true;
+            } else { // La solution convient
+                right = true;
+            }
+        }
+        if (infeasible) {
+            System.out.println("This problem is infeasible");
+            System.out.println(("\nTrying to optimize the solution :\n"));
 
 
-                        // On regarde ici si l'optimisation est une recherche de maximum
-                        if (data.matches("max.*")) {
-                            optimisation = "max";
-                            // On sépare le type d'optimisation de la fonction
-                            String[] lineOutput = data.split("[ ]*:[ ]*");
+            // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
+            try {
+                FileWriter myWriter = new FileWriter("./" + newLpFile);
+                File file = new File(lpFile);
+                Scanner myReader = new Scanner(file);
 
-                            // On sépare les différentes valeur dans la fonction
-                            String[] variables = lineOutput[1].split("[ ]*\\+[ ]*");
-                            function.append(optimisation);
-                            function.append(": ");
-                            int cpt = 0;
-
-                            // On reconstruit la fonction de cout en remplaçant les valeurs par des variables
-                            for (String s2 : variables) {
-                                System.out.println(s2);
-                                if (s2.matches("[0-9]*x[1-9]*")){
-                                    start++;
-                                    function.append(s2);
-                                }
-                                if (s2.matches("[0-9]*[;]?")){
-                                    end++;
-                                    function.append("x");
-                                    function.append(start+end);
-                                }
-                                if (cpt < variables.length-1) {
-                                    function.append(" + ");
-                                }
-                                cpt++;
-                            }
-                            function.append(";");
-                            stringBuilder.append(data);
-                        }
-
-                    }
-                    myReader.close();
-                } catch (FileNotFoundException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
-                }
-
-                // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
-                try {
-                    FileWriter myWriter = new FileWriter("./"+newLpFile);
-                    File file = new File(lpFile);
-                    Scanner myReader = new Scanner(file);
-
-                    // On remplace dans le nouveau fichier la fonction de coût composée de valeur,
-                    // par la nouvelle fonction de coût composée de variables
-                    myReader.nextLine();
-                    myWriter.write(function.toString());
-                    myWriter.write("\n");
-
-                    // On termine en écrivant les contraintes
-                    while (myReader.hasNextLine()) {
+                // On réécrit la fonction de coût
+                myWriter.write(myReader.nextLine());
+                myWriter.write("\n");
+                int cpt = 0;
+                // On termine en écrivant les contraintes
+                while (myReader.hasNextLine()) {
+                    // On passe les contrainte fixant les valeurs des variables
+                    if (cpt < nbVariables) {
+                        cpt++;
+                        myReader.nextLine();
+                    } else { // On réécrit le reste du fichier
                         myWriter.write(myReader.nextLine());
                         myWriter.write("\n");
                     }
-                    myWriter.close();
-                } catch (IOException e) {
-                    System.out.println("An error occurred.");
-                    e.printStackTrace();
                 }
-
-                retryLpFile();
-
-            }else if (s1.matches(".*unbounded.*")) { // On vérifie si le problème est borné
-                stringBuilder.append(s1);
-            }else { // La solution convient
-                //stringBuilder.append("La solution fournie se trouve bien dans MRU");
+                myWriter.close();
+            } catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
             }
+
+            retryLpFile();
         }
-        System.out.println(stringBuilder.toString());
+        if (unbounded) { // On vérifie si le problème est borné
+            System.out.println("The problem is unbounded");
+        }
+        if (right){ // La solution convient
+            System.out.println("The solution is in MRU");
+        }
     }
 
+    /**
+     * Méthode qui exécute de nouveau fichier lp avec le solveur
+     */
     public void retryLpFile() {
         lpFile = newLpFile;
         try {
@@ -164,6 +179,10 @@ public class Lpsolve extends AbstractSolver {
         }
     }
 
+    /**
+     * Méthode d'analyse du nouveau fichier lp, afin de savoir si le problème d'infaisabilité vient
+     * de la fonction de coût ou de la cohérence de MRU
+     */
     public void analyzeLpFile(){
         String[] lpOutput = output.split("\n");
         for (String s1 : lpOutput) {
@@ -172,9 +191,9 @@ public class Lpsolve extends AbstractSolver {
                 System.out.println("MRU incohérent");
             }else if (s1.matches(".*unbounded.*")) { // On vérifie si le problème est borné
                 System.out.println("Le problème n'est pas borné");
-            }else { // La solution convient
-                System.out.println("La nouvelle solution est optimisée");
+            }else { // La nouvelle solution convient
                 System.out.println(s1);
+                System.out.println("\n\n");
             }
 
         }

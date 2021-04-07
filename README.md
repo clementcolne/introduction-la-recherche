@@ -31,6 +31,24 @@ java -jar jarName.jar [solver] <file path> [solver options]
 
 *remplacer [solver] par un des solveurs de la liste "Solveurs disponibles".*
 
+*Le fichier doit être un fichier texte au format :*
+```
+min (Resp. max, le type d'optimisation à effectuer)
+
+// fonction
+Votre fonction de cout
+
+// ci eq (Le numéro de la contrainte et l'égalité permettant de fixer les valeurs d'une variable
+x1 5
+
+A répéter pour toutes les valeur de la fonction de cout
+
+// cj sup (Resp. inf, le numéro de la contrainte ainsi que le type d'inégalité,
+           avec j commençant à i+1)
+x1 1 (Les variables de la contrainte ainsi que la valeur de la borne)
+
+A répéter pour toutes les contraintes du problème
+```
 ### Documentation
 
 * [Lp Solve](http://lpsolve.sourceforge.net/5.5/lp_solve.htm) - options pour Lp Solve

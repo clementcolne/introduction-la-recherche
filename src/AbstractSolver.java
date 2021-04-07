@@ -10,6 +10,7 @@ public abstract class AbstractSolver {
     protected final String solver;
     private Process proc;
     protected String output;
+    protected int nbVariables;
 
     /**
      * Constructeur général de solveur de programme linéaire
@@ -22,6 +23,7 @@ public abstract class AbstractSolver {
         this.solver = solver;
         this.lpFile = "";
         this.newLpFile = "new_lp_file.lp";
+        this.nbVariables = 0;
     }
 
     /**
@@ -74,75 +76,8 @@ public abstract class AbstractSolver {
      */
     public abstract void parseOutput();
 
-    public void createLpFile(){
-        try {
-            lpFile = "./test.lp";
-            FileWriter myWriter = new FileWriter(lpFile);
-            File file = new File(filePath);
-            Scanner myReader = new Scanner(file);
-            int cpt = 1;
-            // On créé un fichier lp grâce aux informations du fichier texte
-            while(myReader.hasNext()){
-                String data = myReader.nextLine();
-                // On regarde si on minimise ou maximis ela fonction de coût
-                if (data.equals("min")){
-                    myWriter.write("min: ");
-                }else if (data.equals("max")){
-                    myWriter.write("max: ");
-                }
-
-                // On regarde si la ligne correspond à la fonction
-                if (data.equals("// fonction")){
-                    data = myReader.nextLine();
-                    String[] dataTab = data.split(" ");
-                    int i = 0;
-                    // On écrit la fonction
-                    for (String s : dataTab) {
-                        myWriter.write(s);
-                        if (i < dataTab.length-1){
-                            myWriter.write(" + ");
-                        }
-                        i++;
-                    }
-                    myWriter.write(";\n");
-                }
-
-                // On vérifie les contraintes
-                if (data.matches("\\/\\/ c[0-9]*.*")){
-                    myWriter.write("c"+cpt+": ");
-                    String inequality = "";
-                    if (data.matches(".*inf")) {
-                        inequality = "<=";
-                    }
-                    if (data.matches(".*sup")) {
-                        inequality = ">=";
-                    }
-                    if (data.matches(".*eq")) {
-                        inequality = "=";
-                    }
-                    data = myReader.nextLine();
-                    String[] dataTab = data.split(" ");
-                    int i = 0;
-                    // On écrit la fonction
-                    for (String s : dataTab) {
-                        myWriter.write(s);
-                        if (i < dataTab.length-2){
-                            myWriter.write(" + ");
-                        }else if (i < dataTab.length-1){
-                            myWriter.write(" "+inequality+" ");
-                        }
-                        i++;
-                    }
-                    cpt++;
-                    myWriter.write(";\n");
-                }
-            }
-            myWriter.close();
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-
-    public abstract void retryLpFile();
+    /**
+     * Méthode permettant de créer un fichier lp depuis un fichier texte
+     */
+    public abstract void createLpFile();
 }
