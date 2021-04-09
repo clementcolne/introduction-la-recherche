@@ -31,7 +31,7 @@ java -jar jarName.jar [solver] <file path> [solver options]
 
 *remplacer [solver] par un des solveurs de la liste "Solveurs disponibles".*
 
-*Le fichier doit être un fichier texte au format :*
+Le fichier doit être un fichier texte au format :
 ```
 min (Resp. max, le type d'optimisation à effectuer)
 
