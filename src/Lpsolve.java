@@ -128,6 +128,10 @@ public class Lpsolve extends AbstractSolver {
             System.out.println(("\nTrying to optimize the solution :\n"));
 
 
+            // Il faut calculer les zi avec zi >= xi - yi, sachant que xi est une valeur
+            // les zi et yi obtenus sont respectivement les plus faibles distances et les points les plus proches
+
+
             // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
             try {
                 FileWriter myWriter = new FileWriter("./" + newLpFile);
@@ -161,7 +165,8 @@ public class Lpsolve extends AbstractSolver {
             System.out.println("The problem is unbounded");
         }
         if (right){ // La solution convient
-            System.out.println("The solution is in MRU");
+            System.out.println("The solution is in MRU :");
+
         }
     }
 
@@ -185,17 +190,83 @@ public class Lpsolve extends AbstractSolver {
      */
     public void analyzeLpFile(){
         String[] lpOutput = output.split("\n");
+        boolean infeasible = false, unbounded = false, right = false;
         for (String s1 : lpOutput) {
             // Le problème n'est pas faisable (MRU est incohérent)
             if (s1.matches(".*infeasible.*")) {
-                System.out.println("MRU incohérent");
+                infeasible = true;
             }else if (s1.matches(".*unbounded.*")) { // On vérifie si le problème est borné
-                System.out.println("Le problème n'est pas borné");
+                unbounded = true;
             }else { // La nouvelle solution convient
-                System.out.println(s1);
-                System.out.println("\n\n");
+                right = true;
             }
+        }
 
+
+        if (infeasible){
+            System.out.println("MRU incohérent");
+        }else if (unbounded){
+            System.out.println("Le problème n'est pas borné");
+        }else if (right){
+            findShortestDistance();
+            System.out.println(output);
+        }
+    }
+
+    private void findShortestDistance() {
+        try {
+            FileWriter myWriter = new FileWriter("./" + newLpFile);
+            File file = new File(filePath);
+            Scanner myReader = new Scanner(file);
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(myReader.nextLine());
+            stringBuilder.append(": ");
+            myReader.nextLine();
+            String[] dataTab = myReader.nextLine().split(" ");
+            for (int i = 0; i < nbVariables; i++){
+                stringBuilder.append("z");
+                stringBuilder.append((i+1));
+                if (i < nbVariables-1){
+                    stringBuilder.append(" + ");
+                }else{
+                    stringBuilder.append(";");
+                }
+            }
+            stringBuilder.append("\n");
+            int cpt = 1;
+            for (int i = 0; i < nbVariables; i++){
+                int index = i+1;
+                stringBuilder.append("c");
+                stringBuilder.append(cpt);
+                stringBuilder.append(": z");
+                stringBuilder.append(index);
+                stringBuilder.append(" >= y");
+                stringBuilder.append(index);
+                stringBuilder.append(" - ");
+                stringBuilder.append(dataTab[i]);
+                stringBuilder.append(";\n");
+                stringBuilder.append("c");
+                stringBuilder.append(cpt+1);
+                stringBuilder.append(": z");
+                stringBuilder.append(index);
+                stringBuilder.append(" >= ");
+                stringBuilder.append(dataTab[i]);
+                stringBuilder.append(" - y");
+                stringBuilder.append(index);
+                stringBuilder.append(";\n");
+
+                cpt++;
+            }
+            System.out.println(stringBuilder);
+            myWriter.write(stringBuilder.toString());
+            myWriter.close();
+            run();
+            display();
+            parseOutput();
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
     }
 }

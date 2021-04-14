@@ -12,7 +12,7 @@ public class Main {
         // get file path
         String filePath = "./" + args[1];
         // default value if no option specified
-        String options = "-S7";
+        String options = "";
         if(args.length == 3) {
             options = args[2];
         }
