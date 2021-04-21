@@ -1,3 +1,6 @@
+import solver.AbstractSolver;
+import solver.Lpsolve;
+
 import java.io.IOException;
 
 public class Main {

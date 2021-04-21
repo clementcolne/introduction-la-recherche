@@ -1,13 +1,9 @@
+package solver;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Lpsolve extends AbstractSolver {
 
@@ -104,11 +100,6 @@ public class Lpsolve extends AbstractSolver {
      * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
      */
     public void parseOutput(){
-        StringBuilder stringBuilder = new StringBuilder();
-        int start = 0;
-        int end = 0;
-        StringBuilder function = new StringBuilder();
-        String optimisation = "";
         boolean infeasible = false, unbounded = false, right = false;
         // On sépare les lignes du fichier en tableau de String
         String[] lpOutput = output.split("\n");
@@ -119,7 +110,7 @@ public class Lpsolve extends AbstractSolver {
                 infeasible = true;
             } else if (s.matches(".*unbounded.*")) { // On vérifie si le problème est borné
                 unbounded = true;
-            } else { // La solution convient
+            } else if (!s.matches("[ ]*")){ // La solution convient
                 right = true;
             }
         }
@@ -219,51 +210,53 @@ public class Lpsolve extends AbstractSolver {
             File file = new File(filePath);
             Scanner myReader = new Scanner(file);
 
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.append(myReader.nextLine());
-            stringBuilder.append(": ");
-            myReader.nextLine();
-            String[] dataTab = myReader.nextLine().split(" ");
-            for (int i = 0; i < nbVariables; i++){
-                stringBuilder.append("z");
-                stringBuilder.append((i+1));
-                if (i < nbVariables-1){
-                    stringBuilder.append(" + ");
-                }else{
-                    stringBuilder.append(";");
+            if (myReader.hasNextLine()) {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(myReader.nextLine());
+                stringBuilder.append(": ");
+                myReader.nextLine();
+                String[] dataTab = myReader.nextLine().split(" ");
+                for (int i = 0; i < nbVariables; i++) {
+                    stringBuilder.append("z");
+                    stringBuilder.append((i + 1));
+                    if (i < nbVariables - 1) {
+                        stringBuilder.append(" + ");
+                    } else {
+                        stringBuilder.append(";");
+                    }
                 }
-            }
-            stringBuilder.append("\n");
-            int cpt = 1;
-            for (int i = 0; i < nbVariables; i++){
-                int index = i+1;
-                stringBuilder.append("c");
-                stringBuilder.append(cpt);
-                stringBuilder.append(": z");
-                stringBuilder.append(index);
-                stringBuilder.append(" >= y");
-                stringBuilder.append(index);
-                stringBuilder.append(" - ");
-                stringBuilder.append(dataTab[i]);
-                stringBuilder.append(";\n");
-                stringBuilder.append("c");
-                stringBuilder.append(cpt+1);
-                stringBuilder.append(": z");
-                stringBuilder.append(index);
-                stringBuilder.append(" >= ");
-                stringBuilder.append(dataTab[i]);
-                stringBuilder.append(" - y");
-                stringBuilder.append(index);
-                stringBuilder.append(";\n");
+                stringBuilder.append("\n");
+                int cpt = 1;
+                for (int i = 0; i < nbVariables; i++) {
+                    int index = i + 1;
+                    stringBuilder.append("c");
+                    stringBuilder.append(cpt);
+                    stringBuilder.append(": z");
+                    stringBuilder.append(index);
+                    stringBuilder.append(" >= y");
+                    stringBuilder.append(index);
+                    stringBuilder.append(" - ");
+                    stringBuilder.append(dataTab[i]);
+                    stringBuilder.append(";\n");
+                    stringBuilder.append("c");
+                    stringBuilder.append(cpt + 1);
+                    stringBuilder.append(": z");
+                    stringBuilder.append(index);
+                    stringBuilder.append(" >= ");
+                    stringBuilder.append(dataTab[i]);
+                    stringBuilder.append(" - y");
+                    stringBuilder.append(index);
+                    stringBuilder.append(";\n");
 
-                cpt++;
+                    cpt++;
+                }
+                System.out.println(stringBuilder);
+                myWriter.write(stringBuilder.toString());
+                myWriter.close();
+                run();
+                display();
+                parseOutput();
             }
-            System.out.println(stringBuilder);
-            myWriter.write(stringBuilder.toString());
-            myWriter.close();
-            run();
-            display();
-            parseOutput();
         } catch (IOException e) {
             System.out.println("An error occurred.");
             e.printStackTrace();

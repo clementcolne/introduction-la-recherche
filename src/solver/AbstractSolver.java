@@ -1,3 +1,5 @@
+package solver;
+
 import java.io.*;
 import java.util.Scanner;
 
@@ -43,6 +45,7 @@ public abstract class AbstractSolver {
      * @throws IOException IOException if file not found
      */
     public void display() throws IOException {
+
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
@@ -80,4 +83,32 @@ public abstract class AbstractSolver {
      * Méthode permettant de créer un fichier lp depuis un fichier texte
      */
     public abstract void createLpFile();
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public String getLpFile() {
+        return lpFile;
+    }
+
+    public String getNewLpFile() {
+        return newLpFile;
+    }
+
+    public String getOptions() {
+        return options;
+    }
+
+    public String getSolver() {
+        return solver;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public int getNbVariables() {
+        return nbVariables;
+    }
 }
