@@ -62,16 +62,9 @@ public class Lpsolve extends AbstractSolver {
                 // On vérifie les contraintes
                 if (data.matches("\\/\\/ c[0-9]*.*")){
                     myWriter.write("c"+cpt+": ");
-                    String inequality = "";
-                    if (data.matches(".*inf")) {
-                        inequality = "<=";
-                    }
-                    if (data.matches(".*sup")) {
-                        inequality = ">=";
-                    }
-                    if (data.matches(".*eq")) {
-                        inequality = "=";
-                    }
+
+                    String inequality = choseInequality(data);
+
                     data = myReader.nextLine();
                     String[] dataTab = data.split(" ");
                     int i = 0;
@@ -100,6 +93,11 @@ public class Lpsolve extends AbstractSolver {
      * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
      */
     public void parseOutput(){
+        StringBuilder stringBuilder = new StringBuilder();
+        int start = 0;
+        int end = 0;
+        StringBuilder function = new StringBuilder();
+        String optimisation = "";
         boolean infeasible = false, unbounded = false, right = false;
         // On sépare les lignes du fichier en tableau de String
         String[] lpOutput = output.split("\n");
@@ -110,7 +108,7 @@ public class Lpsolve extends AbstractSolver {
                 infeasible = true;
             } else if (s.matches(".*unbounded.*")) { // On vérifie si le problème est borné
                 unbounded = true;
-            } else if (!s.matches("[ ]*")){ // La solution convient
+            } else { // La solution convient
                 right = true;
             }
         }
@@ -204,6 +202,9 @@ public class Lpsolve extends AbstractSolver {
         }
     }
 
+    /**
+     * Méthode permettant de retrouver la plus petite distance entre une fonction de coût et MRU
+     */
     private void findShortestDistance() {
         try {
             FileWriter myWriter = new FileWriter("./" + newLpFile);
@@ -216,6 +217,8 @@ public class Lpsolve extends AbstractSolver {
                 stringBuilder.append(": ");
                 myReader.nextLine();
                 String[] dataTab = myReader.nextLine().split(" ");
+
+                // On écrit les contraintes de sorte que les zi soient supérieurs ou égaux à la valeur absolue de yi - xi
                 for (int i = 0; i < nbVariables; i++) {
                     stringBuilder.append("z");
                     stringBuilder.append((i + 1));
@@ -228,27 +231,41 @@ public class Lpsolve extends AbstractSolver {
                 stringBuilder.append("\n");
                 int cpt = 1;
                 for (int i = 0; i < nbVariables; i++) {
-                    int index = i + 1;
-                    stringBuilder.append("c");
-                    stringBuilder.append(cpt);
-                    stringBuilder.append(": z");
-                    stringBuilder.append(index);
-                    stringBuilder.append(" >= y");
-                    stringBuilder.append(index);
-                    stringBuilder.append(" - ");
-                    stringBuilder.append(dataTab[i]);
-                    stringBuilder.append(";\n");
-                    stringBuilder.append("c");
-                    stringBuilder.append(cpt + 1);
-                    stringBuilder.append(": z");
-                    stringBuilder.append(index);
-                    stringBuilder.append(" >= ");
-                    stringBuilder.append(dataTab[i]);
-                    stringBuilder.append(" - y");
-                    stringBuilder.append(index);
-                    stringBuilder.append(";\n");
-
+                    boolean firstUsed = true;
+                    computeAbsoluteValue(stringBuilder, cpt, dataTab, i, firstUsed);
+                    firstUsed = false;
                     cpt++;
+                    computeAbsoluteValue(stringBuilder, cpt, dataTab, i, firstUsed);
+                    cpt++;
+                }
+
+                // On réécrit les contraintes de façon à ce que le calcul de la plus petite distance prenne en compte
+                // les contraintes de MRU
+                while (myReader.hasNext()) {
+                    String data = myReader.nextLine();
+                    // On vérifie les contraintes
+                    if (data.matches("\\/\\/ c[0-9]*.*")) {
+                        stringBuilder.append("c" + cpt + ": ");
+                        String inequality = choseInequality(data);
+                        data = myReader.nextLine();
+                        dataTab = data.split(" ");
+                        int i = 0;
+                        // On écrit la fonction
+                        for (String s : dataTab) {
+                            if (s.matches("x[0-9]*")) {
+                                s = s.replace("x", "y");
+                            }
+                            stringBuilder.append(s);
+                            if (i < dataTab.length - 2) {
+                                stringBuilder.append(" + ");
+                            } else if (i < dataTab.length - 1) {
+                                stringBuilder.append(" " + inequality + " ");
+                            }
+                            i++;
+                        }
+                        cpt++;
+                        stringBuilder.append(";\n");
+                    }
                 }
                 System.out.println(stringBuilder);
                 myWriter.write(stringBuilder.toString());
@@ -261,5 +278,52 @@ public class Lpsolve extends AbstractSolver {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Écrit les contraintes permettant d'avoir la relation zi >= | xi - yi |
+     * @param stringBuilder le String à écrire dans le nouveau fichier lp
+     * @param cpt le compteur de contraintes
+     * @param dataTab le tableau contenant les valeurs des variables
+     * @param i l'index de la boucle permettant d'accéder aux variables dans dataTab
+     * @param firstUsed le booléen permettant de savoir quelle contrainte écrire pour avoir la valeur absolue
+     */
+    private void computeAbsoluteValue(StringBuilder stringBuilder, int cpt, String[] dataTab, int i, boolean firstUsed) {
+        stringBuilder.append("c");
+        stringBuilder.append(cpt);
+        stringBuilder.append(": z");
+        stringBuilder.append((i+1));
+        if (firstUsed){
+            stringBuilder.append(" >= y");
+            stringBuilder.append((i+1));
+            stringBuilder.append(" - ");
+            stringBuilder.append(dataTab[i]);
+            stringBuilder.append(";\n");
+        }else{
+            stringBuilder.append(" >= ");
+            stringBuilder.append(dataTab[i]);
+            stringBuilder.append(" - y");
+            stringBuilder.append((i+1));
+            stringBuilder.append(";\n");
+        }
+    }
+
+    /**
+     * Méthode permettant de choisir quelle inégalité doit être écrite dans les contraintes en fonction du fichier texte
+     * @param data le String indiquant le type d'inégalité à écrire
+     * @return l'inégalité à écrire
+     */
+    private String choseInequality(String data){
+        String inequality = "";
+        if (data.matches(".*inf")) {
+            inequality = "<=";
+        }
+        if (data.matches(".*sup")) {
+            inequality = ">=";
+        }
+        if (data.matches(".*eq")) {
+            inequality = "=";
+        }
+        return inequality;
     }
 }
