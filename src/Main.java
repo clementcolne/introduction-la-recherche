@@ -10,11 +10,11 @@ public class Main {
             System.err.println("Error missing argument : Please, specify the file path and solver executable\n[solver] <file path> [solver options]");
             System.exit(0);
         }
-        // get solver executable
+        // Récupération d' lexécutable du solveur
         String solveur = args[0];
-        // get file path
+        // récupération du fichier texte
         String filePath = "./" + args[1];
-        // default value if no option specified
+        // option par défaut si aucune option n'est précisée
         String options = "";
         if(args.length == 3) {
             options = args[2];
@@ -23,7 +23,6 @@ public class Main {
         AbstractSolver solver = null;
 
         switch (solveur) {
-            // Lp Solve solver on mac
             case "lp_solve":
                 solver = new Lpsolve(filePath, options, solveur);
                 break;
@@ -32,9 +31,8 @@ public class Main {
                 System.exit(0);
         }
 
-        // execute solve
+        // exécution du solveur
         try {
-            // run lp solve
             solver.createLpFile();
             solver.run();
             solver.display();

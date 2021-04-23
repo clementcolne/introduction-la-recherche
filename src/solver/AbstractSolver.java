@@ -17,7 +17,7 @@ public abstract class AbstractSolver {
     /**
      * Constructeur général de solveur de programme linéaire
      * @param filePath chemin du fichier
-    // * @param options options du solveur
+     * @param options options du solveur
      */
     public AbstractSolver(String filePath, String options, String solver) {
         this.filePath = filePath;
@@ -34,9 +34,9 @@ public abstract class AbstractSolver {
      */
     public void run() throws IOException {
         Runtime rt = Runtime.getRuntime();
-        // command to run lp solve
+        // command pour exécuter lpsolve
         String[] commands = {solver, options, lpFile};
-        // run command
+        // exécution de la commande
         proc = rt.exec(commands);
     }
 
@@ -49,7 +49,7 @@ public abstract class AbstractSolver {
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc.getInputStream()));
         BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
 
-        // read the output from the command
+        // lecture de la sortie de la commande
         String s;
         this.output = "";
         while ((s = stdInput.readLine()) != null) {
@@ -58,7 +58,7 @@ public abstract class AbstractSolver {
         }
 
         if((s = stdError.readLine()) != null) {
-            // read any errors from the attempted command
+            // lecture de toutes les erreurs relevées par la commande
             System.out.println("Standard error :\n" + s);
             while ((s = stdError.readLine()) != null) {
                 System.out.println(s);

@@ -13,6 +13,12 @@ Logiciel(s) nécessaires au fonctionnement du projet :
 Lp Solve
 ```
 
+Version du sdk utilisé :
+
+```
+java 1.8
+```
+
 ### Solveurs disponibles
 
 Liste des différents solveurs disponibles :
