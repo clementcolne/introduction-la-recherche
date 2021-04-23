@@ -17,7 +17,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        solver1 = new Lpsolve("./test.txt", "-S7", "lp_solve");
+        solver1 = new Lpsolve("test.txt", "-S7", "lp_solve");
         solver2 = new Lpsolve("./wrongExtension.mp3", "-S7", "lp_solve");
         solver3 = new Lpsolve("./testWrong.txt", "-S7", "lp_solve");
         solver4 = new Lpsolve("./wrongExtension.mp3", "-S7", "lp_solve");

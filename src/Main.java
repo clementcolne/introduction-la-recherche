@@ -10,7 +10,7 @@ public class Main {
             System.err.println("Error missing argument : Please, specify the file path and solver executable\n[solver] <file path> [solver options]");
             System.exit(0);
         }
-        // Récupération d' lexécutable du solveur
+        // Récupération du nom de l'exécutable du solveur
         String solveur = args[0];
         // récupération du fichier texte
         String filePath = "./" + args[1];
