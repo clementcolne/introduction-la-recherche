@@ -29,8 +29,8 @@ public abstract class AbstractSolver {
     }
 
     /**
-     * Runs solver for the specified file and options
-     * @throws IOException IOException if file not found
+     * Lance l'exécutable du solveur pour un fichier et des options spécifiques
+     * @throws IOException IOException si le fichier n'est pas trouvé
      */
     public void run() throws IOException {
         Runtime rt = Runtime.getRuntime();
@@ -41,8 +41,8 @@ public abstract class AbstractSolver {
     }
 
     /**
-     * Displays the output of the solve
-     * @throws IOException IOException if file not found
+     * Permet l'affichage la sortie standard du solveur
+     * @throws IOException IOException si le fichier n'est pas trouvé
      */
     public void display() throws IOException {
 
@@ -64,14 +64,6 @@ public abstract class AbstractSolver {
                 System.out.println(s);
             }
         }
-    }
-
-    /**
-     * Méthode permettant de calculer la distance de Manhattan entre deux points donnés
-     * @return la distance de Manhattan entre deux points donnés
-     */
-    public int computeManhattanDistance(){
-        return 0;
     }
 
     /**

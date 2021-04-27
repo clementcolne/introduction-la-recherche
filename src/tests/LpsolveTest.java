@@ -10,6 +10,13 @@ import java.io.IOException;
 class LpsolveTest {
 
     private AbstractSolver solver1;
+    private AbstractSolver solver6;
+    private AbstractSolver solver7;
+    private AbstractSolver solver8;
+    private AbstractSolver solver9;
+    private AbstractSolver solver10;
+    private AbstractSolver solver11;
+    private AbstractSolver solver12;
     private AbstractSolver solver2;
     private Lpsolve solver3;
     private AbstractSolver solver5;
@@ -17,11 +24,18 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        solver1 = new Lpsolve("tests/test.txt", "-S7", "lp_solve");
-        solver2 = new Lpsolve("tests/wrongExtension.mp3", "-S7", "lp_solve");
-        solver3 = new Lpsolve("tests/testWrong.txt", "-S7", "lp_solve");
-        solver4 = new Lpsolve("tests/wrongExtension.mp3", "-S7", "lp_solve");
-        solver5 = new Lpsolve("tests/wrong_path.txt", "-S7", "lp_solve");
+        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S7", "lp_solve");
+        solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
+        solver3 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"testWrong.txt", "-S7", "lp_solve");
+        solver4 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
+        solver5 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrong_path.txt", "-S7", "lp_solve");
+        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "", "lp_solve");
+        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S1", "lp_solve");
+        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S2", "lp_solve");
+        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S3", "lp_solve");
+        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S4", "lp_solve");
+        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S5", "lp_solve");
+        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S6", "lp_solve");
     }
 
     @org.junit.jupiter.api.Test
@@ -76,5 +90,343 @@ class LpsolveTest {
     void retryLpFileEmptyTxt() {
         solver3.createLpFile();
         solver3.retryLpFile();
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultNoOption() throws IOException {
+        solver6.createLpFile();
+        solver6.run();
+        solver6.display();
+        solver6.parseOutput();
+
+        String res = "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n";
+
+        Assertions.assertEquals(res, solver6.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS1Option() throws IOException {
+        solver7.createLpFile();
+        solver7.run();
+        solver7.display();
+        solver7.parseOutput();
+
+        String res = "\n" +
+                "Value of objective function: 2.00000000\n";
+
+        Assertions.assertEquals(res, solver7.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS2Option() throws IOException {
+        solver8.createLpFile();
+        solver8.run();
+        solver8.display();
+        solver8.parseOutput();
+
+        String res = "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n";
+
+        Assertions.assertEquals(res, solver8.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS3Option() throws IOException {
+        solver9.createLpFile();
+        solver9.run();
+        solver9.display();
+        solver9.parseOutput();
+
+        String res = "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n" +
+                "\n" +
+                "Actual values of the constraints:\n" +
+                "c1                             -1\n" +
+                "c2                              5\n" +
+                "c3                             -2\n" +
+                "c4                              2\n" +
+                "c5                              3\n" +
+                "c6                              3\n" +
+                "c7                              2\n" +
+                "c8                              2\n";
+
+        Assertions.assertEquals(res, solver9.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS4Option() throws IOException {
+        solver10.createLpFile();
+        solver10.run();
+        solver10.display();
+        solver10.parseOutput();
+
+        String res = "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n" +
+                "\n" +
+                "Actual values of the constraints:\n" +
+                "c1                             -1\n" +
+                "c2                              5\n" +
+                "c3                             -2\n" +
+                "c4                              2\n" +
+                "c5                              3\n" +
+                "c6                              3\n" +
+                "c7                              2\n" +
+                "c8                              2\n" +
+                "\n" +
+                "Objective function limits:\n" +
+                "                                 From            Till       FromValue\n" +
+                "z1                                  0          1e+030         -1e+030\n" +
+                "z2                                  0          1e+030               0\n" +
+                "y1                            -1e+030               1         -1e+030\n" +
+                "y2                                  0               1         -1e+030\n" +
+                "\n" +
+                "Dual values with from - till limits:\n" +
+                "                           Dual value            From            Till\n" +
+                "c1                                  0         -1e+030          1e+030\n" +
+                "c2                                  1               3          1e+030\n" +
+                "c3                                  0         -1e+030          1e+030\n" +
+                "c4                                  0               1               2\n" +
+                "c5                                  0         -1e+030          1e+030\n" +
+                "c6                                 -1               1               5\n" +
+                "c7                                  0         -1e+030          1e+030\n" +
+                "c8                                  0         -1e+030          1e+030\n" +
+                "z1                                  0         -1e+030          1e+030\n" +
+                "z2                                  1               0               1\n" +
+                "y1                                  0         -1e+030          1e+030\n" +
+                "y2                                  0         -1e+030          1e+030\n";
+
+        Assertions.assertEquals(res, solver10.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS5Option() throws IOException {
+        solver11.createLpFile();
+        solver11.run();
+        solver11.display();
+        solver11.parseOutput();
+
+        String res = "Model name: \n" +
+                "                z1       z2       y1       y2 \n" +
+                "Minimize         1        1        0        0 \n" +
+                "c1               1        0       -1        0 >=       -5\n" +
+                "c2               1        0        1        0 >=        5\n" +
+                "c3               0        1        0       -1 >=       -2\n" +
+                "c4               0        1        0        1 >=        2\n" +
+                "c5               0        0        1        0 >=        1\n" +
+                "c6               0        0        1        0 <=        3\n" +
+                "c7               0        0        0        1 >=        1\n" +
+                "c8               0        0        0        1 <=        3\n" +
+                "Type          Real     Real     Real     Real \n" +
+                "upbo           Inf      Inf      Inf      Inf \n" +
+                "lowbo            0        0        0        0 \n" +
+                "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n" +
+                "\n" +
+                "Actual values of the constraints:\n" +
+                "c1                             -1\n" +
+                "c2                              5\n" +
+                "c3                             -2\n" +
+                "c4                              2\n" +
+                "c5                              3\n" +
+                "c6                              3\n" +
+                "c7                              2\n" +
+                "c8                              2\n" +
+                "\n" +
+                "Objective function limits:\n" +
+                "                                 From            Till       FromValue\n" +
+                "z1                                  0          1e+030         -1e+030\n" +
+                "z2                                  0          1e+030               0\n" +
+                "y1                            -1e+030               1         -1e+030\n" +
+                "y2                                  0               1         -1e+030\n" +
+                "\n" +
+                "Dual values with from - till limits:\n" +
+                "                           Dual value            From            Till\n" +
+                "c1                                  0         -1e+030          1e+030\n" +
+                "c2                                  1               3          1e+030\n" +
+                "c3                                  0         -1e+030          1e+030\n" +
+                "c4                                  0               1               2\n" +
+                "c5                                  0         -1e+030          1e+030\n" +
+                "c6                                 -1               1               5\n" +
+                "c7                                  0         -1e+030          1e+030\n" +
+                "c8                                  0         -1e+030          1e+030\n" +
+                "z1                                  0         -1e+030          1e+030\n" +
+                "z2                                  1               0               1\n" +
+                "y1                                  0         -1e+030          1e+030\n" +
+                "y2                                  0         -1e+030          1e+030\n";
+
+        Assertions.assertEquals(res, solver11.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS6Option() throws IOException {
+        solver12.createLpFile();
+        solver12.run();
+        solver12.display();
+        solver12.parseOutput();
+
+        String res = "Model name: \n" +
+                "                z1       z2       y1       y2 \n" +
+                "Minimize         1        1        0        0 \n" +
+                "c1               1        0       -1        0 >=       -5\n" +
+                "c2               1        0        1        0 >=        5\n" +
+                "c3               0        1        0       -1 >=       -2\n" +
+                "c4               0        1        0        1 >=        2\n" +
+                "c5               0        0        1        0 >=        1\n" +
+                "c6               0        0        1        0 <=        3\n" +
+                "c7               0        0        0        1 >=        1\n" +
+                "c8               0        0        0        1 <=        3\n" +
+                "Type          Real     Real     Real     Real \n" +
+                "upbo           Inf      Inf      Inf      Inf \n" +
+                "lowbo            0        0        0        0 \n" +
+                "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n" +
+                "\n" +
+                "Actual values of the constraints:\n" +
+                "c1                             -1\n" +
+                "c2                              5\n" +
+                "c3                             -2\n" +
+                "c4                              2\n" +
+                "c5                              3\n" +
+                "c6                              3\n" +
+                "c7                              2\n" +
+                "c8                              2\n" +
+                "\n" +
+                "Objective function limits:\n" +
+                "                                 From            Till       FromValue\n" +
+                "z1                                  0          1e+030         -1e+030\n" +
+                "z2                                  0          1e+030               0\n" +
+                "y1                            -1e+030               1         -1e+030\n" +
+                "y2                                  0               1         -1e+030\n" +
+                "\n" +
+                "Dual values with from - till limits:\n" +
+                "                           Dual value            From            Till\n" +
+                "c1                                  0         -1e+030          1e+030\n" +
+                "c2                                  1               3          1e+030\n" +
+                "c3                                  0         -1e+030          1e+030\n" +
+                "c4                                  0               1               2\n" +
+                "c5                                  0         -1e+030          1e+030\n" +
+                "c6                                 -1               1               5\n" +
+                "c7                                  0         -1e+030          1e+030\n" +
+                "c8                                  0         -1e+030          1e+030\n" +
+                "z1                                  0         -1e+030          1e+030\n" +
+                "z2                                  1               0               1\n" +
+                "y1                                  0         -1e+030          1e+030\n" +
+                "y2                                  0         -1e+030          1e+030\n";
+
+        Assertions.assertEquals(res, solver12.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void RightResultS7Option() throws IOException {
+        solver1.createLpFile();
+        solver1.run();
+        solver1.display();
+        solver1.parseOutput();
+
+        String res = "Model name: \n" +
+                "                z1       z2       y1       y2 \n" +
+                "Minimize         1        1        0        0 \n" +
+                "c1               1        0       -1        0 >=       -5\n" +
+                "c2               1        0        1        0 >=        5\n" +
+                "c3               0        1        0       -1 >=       -2\n" +
+                "c4               0        1        0        1 >=        2\n" +
+                "c5               0        0        1        0 >=        1\n" +
+                "c6               0        0        1        0 <=        3\n" +
+                "c7               0        0        0        1 >=        1\n" +
+                "c8               0        0        0        1 <=        3\n" +
+                "Type          Real     Real     Real     Real \n" +
+                "upbo           Inf      Inf      Inf      Inf \n" +
+                "lowbo            0        0        0        0 \n" +
+                "\n" +
+                "Value of objective function: 2.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "z1                              2\n" +
+                "z2                              0\n" +
+                "y1                              3\n" +
+                "y2                              2\n" +
+                "\n" +
+                "Actual values of the constraints:\n" +
+                "c1                             -1\n" +
+                "c2                              5\n" +
+                "c3                             -2\n" +
+                "c4                              2\n" +
+                "c5                              3\n" +
+                "c6                              3\n" +
+                "c7                              2\n" +
+                "c8                              2\n" +
+                "\n" +
+                "Objective function limits:\n" +
+                "                                 From            Till       FromValue\n" +
+                "z1                                  0          1e+030         -1e+030\n" +
+                "z2                                  0          1e+030               0\n" +
+                "y1                            -1e+030               1         -1e+030\n" +
+                "y2                                  0               1         -1e+030\n" +
+                "\n" +
+                "Dual values with from - till limits:\n" +
+                "                           Dual value            From            Till\n" +
+                "c1                                  0         -1e+030          1e+030\n" +
+                "c2                                  1               3          1e+030\n" +
+                "c3                                  0         -1e+030          1e+030\n" +
+                "c4                                  0               1               2\n" +
+                "c5                                  0         -1e+030          1e+030\n" +
+                "c6                                 -1               1               5\n" +
+                "c7                                  0         -1e+030          1e+030\n" +
+                "c8                                  0         -1e+030          1e+030\n" +
+                "z1                                  0         -1e+030          1e+030\n" +
+                "z2                                  1               0               1\n" +
+                "y1                                  0         -1e+030          1e+030\n" +
+                "y2                                  0         -1e+030          1e+030\n" +
+                "\n" +
+                "Tableau at iter 3:\n" +
+                "              6              8            -10              2\n" +
+                "  5     -1.0000000      0.0000000     -2.0000000      0.0000000      4.0000000\n" +
+                "  3      0.0000000      0.0000000      1.0000000      0.0000000      3.0000000\n" +
+                "  7      0.0000000      1.0000000      0.0000000     -2.0000000      0.0000000\n" +
+                "  4      0.0000000     -1.0000000      0.0000000      1.0000000      2.0000000\n" +
+                "  9      0.0000000      0.0000000      1.0000000      0.0000000      2.0000000\n" +
+                "  1     -1.0000000      0.0000000     -1.0000000      0.0000000      2.0000000\n" +
+                " 11      0.0000000     -1.0000000      0.0000000      1.0000000      1.0000000\n" +
+                "-12      0.0000000      1.0000000      0.0000000     -1.0000000      1.0000000\n" +
+                "        -1.0000000      0.0000000     -1.0000000     -1.0000000      2.0000000\n";
+
+        Assertions.assertEquals(res, solver1.getOutput());
     }
 }

@@ -21,7 +21,7 @@ public class Lpsolve extends AbstractSolver {
      */
     public void createLpFile() {
         try {
-            lpFile = "./test.lp";
+            lpFile = "."+File.separatorChar+"test.lp";
             FileWriter myWriter = new FileWriter(lpFile);
             File file = new File(filePath);
             Scanner myReader = new Scanner(file);
@@ -116,11 +116,6 @@ public class Lpsolve extends AbstractSolver {
             System.out.println("This problem is infeasible");
             System.out.println(("\nTrying to optimize the solution :\n"));
 
-
-            // Il faut calculer les zi avec zi >= xi - yi, sachant que xi est une valeur
-            // les zi et yi obtenus sont respectivement les plus faibles distances et les points les plus proches
-
-
             // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
             try {
                 FileWriter myWriter = new FileWriter("./" + newLpFile);
@@ -154,8 +149,7 @@ public class Lpsolve extends AbstractSolver {
             System.out.println("The problem is unbounded");
         }
         if (right){ // La solution convient
-            System.out.println("The solution is in MRU :");
-
+            System.out.println("The solution is in MRU");
         }
     }
 
