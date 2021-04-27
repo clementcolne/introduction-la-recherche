@@ -26,6 +26,8 @@ public abstract class AbstractSolver {
         this.solverFile = "";
         this.newSolverFile = "output"+File.separatorChar+"new_solver_file";
         this.nbVariables = 0;
+        File outputRes = new File("output");
+        outputRes.mkdir();
     }
 
     /**

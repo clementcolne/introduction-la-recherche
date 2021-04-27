@@ -16,8 +16,6 @@ public class Lpsolve extends AbstractSolver {
         super(filePath, options, solver);
         extension = ".lp";
         solverFile = "output"+File.separatorChar+"result.lp";
-        File outputRes = new File("output");
-        outputRes.mkdir();
     }
 
     /**
