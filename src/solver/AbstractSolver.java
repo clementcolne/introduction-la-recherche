@@ -13,6 +13,7 @@ public abstract class AbstractSolver {
     protected String output;
     protected int nbVariables;
     protected String extension;
+    protected static double epsilon;
 
     /**
      * Constructeur général de solveur de programme linéaire
@@ -24,9 +25,10 @@ public abstract class AbstractSolver {
         this.options = options;
         this.solver = getClass().getClassLoader().getResource("programmes/"+solver+".exe").getPath();
         this.solverFile = "";
-        this.newSolverFile = "output"+File.separatorChar+"new_solver_file";
+        this.newSolverFile = "output"+File.separatorChar+"final_result";
         this.nbVariables = 0;
         File outputRes = new File("output");
+        epsilon = 0.001;
         outputRes.mkdir();
     }
 

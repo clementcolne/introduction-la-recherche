@@ -15,7 +15,7 @@ public class Lpsolve extends AbstractSolver {
     public Lpsolve(String filePath, String options, String solver) {
         super(filePath, options, solver);
         extension = ".lp";
-        solverFile = "output"+File.separatorChar+"result.lp";
+        solverFile = "output"+File.separatorChar+"user_solution.lp";
     }
 
     /**
@@ -311,10 +311,10 @@ public class Lpsolve extends AbstractSolver {
     private String choseInequality(String data){
         String inequality = "";
         if (data.matches(".*inf")) {
-            inequality = "<=";
+            inequality = "+ "+epsilon+" <=";
         }
         if (data.matches(".*sup")) {
-            inequality = ">=";
+            inequality = ">= "+epsilon+" +";
         }
         if (data.matches(".*eq")) {
             inequality = "=";
