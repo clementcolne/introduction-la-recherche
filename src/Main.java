@@ -6,14 +6,15 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-        if(args.length == 0 || args.length == 1) {
+        if(args.length <= 1) {
             System.err.println("Error missing argument : Please, specify the file path and solver executable\n[solver] <file path> [solver options]");
             System.exit(0);
         }
         // Récupération du nom de l'exécutable du solveur
         String solveur = args[0];
         // récupération du fichier texte
-        String filePath = "./" + args[1];
+
+        String filePath = Main.class.getClassLoader().getResource(args[1]).getPath();
         // option par défaut si aucune option n'est précisée
         String options = "";
         if(args.length == 3) {
@@ -33,7 +34,7 @@ public class Main {
 
         // exécution du solveur
         try {
-            solver.createLpFile();
+            solver.createSolverFile();
             solver.run();
             solver.display();
             solver.parseOutput();

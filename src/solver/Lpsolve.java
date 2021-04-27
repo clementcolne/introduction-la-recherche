@@ -14,15 +14,16 @@ public class Lpsolve extends AbstractSolver {
      */
     public Lpsolve(String filePath, String options, String solver) {
         super(filePath, options, solver);
+        extension = ".lp";
+        solverFile = "output"+File.separatorChar+"result.lp";
     }
 
     /**
      * Méthode permettant de créer un fichier lp depuis un fichier texte
      */
-    public void createLpFile() {
+    public void createSolverFile() {
         try {
-            lpFile = "."+File.separatorChar+"test.lp";
-            FileWriter myWriter = new FileWriter(lpFile);
+            FileWriter myWriter = new FileWriter(solverFile);
             File file = new File(filePath);
             Scanner myReader = new Scanner(file);
             int cpt = 1;
@@ -118,8 +119,8 @@ public class Lpsolve extends AbstractSolver {
 
             // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
             try {
-                FileWriter myWriter = new FileWriter("./" + newLpFile);
-                File file = new File(lpFile);
+                FileWriter myWriter = new FileWriter("./" + getNewSolverFile());
+                File file = new File(solverFile);
                 Scanner myReader = new Scanner(file);
 
                 // On réécrit la fonction de coût
@@ -157,7 +158,7 @@ public class Lpsolve extends AbstractSolver {
      * Méthode qui exécute de nouveau fichier lp avec le solveur
      */
     public void retryLpFile() {
-        lpFile = newLpFile;
+        solverFile = getNewSolverFile();
         try {
             run();
             display();
@@ -201,7 +202,7 @@ public class Lpsolve extends AbstractSolver {
      */
     private void findShortestDistance() {
         try {
-            FileWriter myWriter = new FileWriter("./" + newLpFile);
+            FileWriter myWriter = new FileWriter("./" + getNewSolverFile());
             File file = new File(filePath);
             Scanner myReader = new Scanner(file);
 

@@ -1,18 +1,18 @@
 package solver;
 
 import java.io.*;
-import java.util.Scanner;
 
 public abstract class AbstractSolver {
 
     protected final String filePath;
-    protected String lpFile;
-    protected final String newLpFile;
+    protected String solverFile;
+    protected final String newSolverFile;
     protected final String options;
     protected final String solver;
     private Process proc;
     protected String output;
     protected int nbVariables;
+    protected String extension;
 
     /**
      * Constructeur général de solveur de programme linéaire
@@ -22,9 +22,9 @@ public abstract class AbstractSolver {
     public AbstractSolver(String filePath, String options, String solver) {
         this.filePath = filePath;
         this.options = options;
-        this.solver = solver;
-        this.lpFile = "";
-        this.newLpFile = "new_lp_file.lp";
+        this.solver = getClass().getClassLoader().getResource("programmes/"+solver+".exe").getPath();
+        this.solverFile = "";
+        this.newSolverFile = "output"+File.separatorChar+"new_solver_file";
         this.nbVariables = 0;
     }
 
@@ -32,12 +32,16 @@ public abstract class AbstractSolver {
      * Lance l'exécutable du solveur pour un fichier et des options spécifiques
      * @throws IOException IOException si le fichier n'est pas trouvé
      */
-    public void run() throws IOException {
+    public void run() {
         Runtime rt = Runtime.getRuntime();
         // command pour exécuter lpsolve
-        String[] commands = {solver, options, lpFile};
+        String[] commands = {solver, options, solverFile};
         // exécution de la commande
-        proc = rt.exec(commands);
+        try {
+            proc = rt.exec(commands);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -74,18 +78,18 @@ public abstract class AbstractSolver {
     /**
      * Méthode permettant de créer un fichier lp depuis un fichier texte
      */
-    public abstract void createLpFile();
+    public abstract void createSolverFile();
 
     public String getFilePath() {
         return filePath;
     }
 
-    public String getLpFile() {
-        return lpFile;
+    public String getSolverFile() {
+        return solverFile;
     }
 
-    public String getNewLpFile() {
-        return newLpFile;
+    public String getNewSolverFile() {
+        return newSolverFile+extension;
     }
 
     public String getOptions() {

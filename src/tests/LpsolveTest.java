@@ -39,16 +39,16 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testCreateLpFileRight() {
-        solver1.createLpFile();
-        solver2.createLpFile();
-        solver3.createLpFile();
-        solver4.createLpFile();
-        solver5.createLpFile();
+    void testcreateSolverFileRight() {
+        solver1.createSolverFile();
+        solver2.createSolverFile();
+        solver3.createSolverFile();
+        solver4.createSolverFile();
+        solver5.createSolverFile();
 
-        File file = new File(solver1.getLpFile());
-        File file2 = new File(solver2.getLpFile());
-        File file3 = new File(solver3.getLpFile());
+        File file = new File(solver1.getSolverFile());
+        File file2 = new File(solver2.getSolverFile());
+        File file3 = new File(solver3.getSolverFile());
 
         Assertions.assertTrue(file.exists());
         Assertions.assertTrue(file2.exists());
@@ -56,17 +56,17 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void testCreateLpFileWrong() {
-        solver5.createLpFile();
+    void testcreateSolverFileWrong() {
+        solver5.createSolverFile();
 
-        File file = new File(solver5.getLpFile());
+        File file = new File(solver5.getSolverFile());
 
         Assertions.assertTrue(file.exists());
     }
 
     @org.junit.jupiter.api.Test
     void testParseOutputWrongExtension() throws IOException {
-        solver2.createLpFile();
+        solver2.createSolverFile();
         solver2.run();
         solver2.display();
         solver2.parseOutput();
@@ -74,7 +74,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void testParseOutputEmptyTxt() throws IOException {
-        solver3.createLpFile();
+        solver3.createSolverFile();
         solver3.run();
         solver3.display();
         solver3.parseOutput();
@@ -82,19 +82,19 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void retryLpFileWrongExtension() {
-        solver4.createLpFile();
+        solver4.createSolverFile();
         solver4.retryLpFile();
     }
 
     @org.junit.jupiter.api.Test
     void retryLpFileEmptyTxt() {
-        solver3.createLpFile();
+        solver3.createSolverFile();
         solver3.retryLpFile();
     }
 
     @org.junit.jupiter.api.Test
     void RightResultNoOption() throws IOException {
-        solver6.createLpFile();
+        solver6.createSolverFile();
         solver6.run();
         solver6.display();
         solver6.parseOutput();
@@ -113,7 +113,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS1Option() throws IOException {
-        solver7.createLpFile();
+        solver7.createSolverFile();
         solver7.run();
         solver7.display();
         solver7.parseOutput();
@@ -126,7 +126,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS2Option() throws IOException {
-        solver8.createLpFile();
+        solver8.createSolverFile();
         solver8.run();
         solver8.display();
         solver8.parseOutput();
@@ -145,7 +145,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS3Option() throws IOException {
-        solver9.createLpFile();
+        solver9.createSolverFile();
         solver9.run();
         solver9.display();
         solver9.parseOutput();
@@ -174,7 +174,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS4Option() throws IOException {
-        solver10.createLpFile();
+        solver10.createSolverFile();
         solver10.run();
         solver10.display();
         solver10.parseOutput();
@@ -225,7 +225,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS5Option() throws IOException {
-        solver11.createLpFile();
+        solver11.createSolverFile();
         solver11.run();
         solver11.display();
         solver11.parseOutput();
@@ -290,7 +290,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS6Option() throws IOException {
-        solver12.createLpFile();
+        solver12.createSolverFile();
         solver12.run();
         solver12.display();
         solver12.parseOutput();
@@ -355,7 +355,7 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.Test
     void RightResultS7Option() throws IOException {
-        solver1.createLpFile();
+        solver1.createSolverFile();
         solver1.run();
         solver1.display();
         solver1.parseOutput();
