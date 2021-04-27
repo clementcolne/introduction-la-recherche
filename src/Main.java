@@ -14,7 +14,7 @@ public class Main {
         String solveur = args[0];
         // récupération du fichier texte
 
-        String filePath = Main.class.getClassLoader().getResource(args[1]).getPath();
+        String filePath = args[1];
         // option par défaut si aucune option n'est précisée
         String options = "";
         if(args.length == 3) {

@@ -24,18 +24,18 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S7", "lp_solve");
+        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S7", "lp_solve");
         solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
         solver3 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"testWrong.txt", "-S7", "lp_solve");
         solver4 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
         solver5 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrong_path.txt", "-S7", "lp_solve");
-        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "", "lp_solve");
-        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S1", "lp_solve");
-        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S2", "lp_solve");
-        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S3", "lp_solve");
-        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S4", "lp_solve");
-        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S5", "lp_solve");
-        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"test.txt", "-S6", "lp_solve");
+        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "", "lp_solve");
+        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S1", "lp_solve");
+        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S2", "lp_solve");
+        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S3", "lp_solve");
+        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S4", "lp_solve");
+        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S5", "lp_solve");
+        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S6", "lp_solve");
     }
 
     @org.junit.jupiter.api.Test

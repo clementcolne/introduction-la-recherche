@@ -37,7 +37,7 @@ java -jar jarName.jar [solver] <file path> /[solver options]
 *[solver] doit être remplacer par un des solveurs de la liste "Solveurs disponibles".*
 
 ## Format de fichier
-Le fichier doit être un fichier texte au format :
+Le fichier doit être un fichier texte au format pour être utilisé avec lp_solve :
 ```
 min (Resp. max, le type d'optimisation à effectuer)
 
@@ -58,7 +58,7 @@ A répéter pour toutes les contraintes du problème
 La structure du fichier texte est adaptée à l’utilisation de lp_solve, mais il est possible que cette structure ne soit pas adaptée à l'utilisation d'un autre solveur.
 ##Exemple d'exécution
 
-Exemple d'éxécution sur le fichier test.txt :
+Exemple d'éxécution sur le fichier test.txt avec le serveur lp_solve :
 ```
 min
 // fonction
