@@ -1,0 +1,11 @@
+min
+// fonction
+2 2
+// c1 sup
+x1 1
+// c2 inf
+x1 3
+// c3 sup
+x2 1
+// c4 inf
+x2 3
