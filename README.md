@@ -56,7 +56,8 @@ x1 1 (Les variables de la contrainte ainsi que la valeur de la borne)
 A répéter pour toutes les contraintes du problème
 ```
 La structure du fichier texte est adaptée à l’utilisation de lp_solve, mais il est possible que cette structure ne soit pas adaptée à l'utilisation d'un autre solveur.
-##Exemple d'exécution
+
+## Exemple d'exécution
 
 Exemple d'éxécution sur le fichier test.txt avec le serveur lp_solve :
 ```
