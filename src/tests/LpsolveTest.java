@@ -26,20 +26,20 @@ class LpsolveTest {
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S7", "lp_solve");
-        solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
-        solver3 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"testWrong.txt", "-S7", "lp_solve");
-        solver4 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
-        solver5 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrong_path.txt", "-S7", "lp_solve");
-        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "", "lp_solve");
-        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S1", "lp_solve");
-        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S2", "lp_solve");
-        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S3", "lp_solve");
-        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S4", "lp_solve");
-        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S5", "lp_solve");
-        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S6", "lp_solve");
-        solver13 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongMRU.txt", "", "lp_solve");
-        solver14 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "rightFunction.txt", "", "lp_solve");
+        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S7");
+        solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7");
+        solver3 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"testWrong.txt", "-S7");
+        solver4 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7");
+        solver5 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrong_path.txt", "-S7");
+        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "");
+        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S1");
+        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S2");
+        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S3");
+        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S4");
+        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S5");
+        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S6");
+        solver13 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongMRU.txt", "");
+        solver14 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "rightFunction.txt", "");
     }
 
     @org.junit.jupiter.api.Test
@@ -104,12 +104,12 @@ class LpsolveTest {
         solver6.parseOutput();
 
         String res = "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n";
 
         Assertions.assertEquals(res, solver6.getOutput());
@@ -123,7 +123,7 @@ class LpsolveTest {
         solver7.parseOutput();
 
         String res = "\n" +
-                "Value of objective function: 2.00000000\n";
+                "Value of objective function: 2.00100000\n";
 
         Assertions.assertEquals(res, solver7.getOutput());
     }
@@ -136,12 +136,12 @@ class LpsolveTest {
         solver8.parseOutput();
 
         String res = "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n";
 
         Assertions.assertEquals(res, solver8.getOutput());
@@ -155,21 +155,21 @@ class LpsolveTest {
         solver9.parseOutput();
 
         String res = "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n" +
                 "\n" +
                 "Actual values of the constraints:\n" +
-                "c1                             -1\n" +
+                "c1                         -0.998\n" +
                 "c2                              5\n" +
                 "c3                             -2\n" +
                 "c4                              2\n" +
-                "c5                              3\n" +
-                "c6                              3\n" +
+                "c5                          2.999\n" +
+                "c6                          2.999\n" +
                 "c7                              2\n" +
                 "c8                              2\n";
 
@@ -184,21 +184,21 @@ class LpsolveTest {
         solver10.parseOutput();
 
         String res = "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n" +
                 "\n" +
                 "Actual values of the constraints:\n" +
-                "c1                             -1\n" +
+                "c1                         -0.998\n" +
                 "c2                              5\n" +
                 "c3                             -2\n" +
                 "c4                              2\n" +
-                "c5                              3\n" +
-                "c6                              3\n" +
+                "c5                          2.999\n" +
+                "c6                          2.999\n" +
                 "c7                              2\n" +
                 "c8                              2\n" +
                 "\n" +
@@ -212,15 +212,15 @@ class LpsolveTest {
                 "Dual values with from - till limits:\n" +
                 "                           Dual value            From            Till\n" +
                 "c1                                  0         -1e+030          1e+030\n" +
-                "c2                                  1               3          1e+030\n" +
+                "c2                                  1           2.999          1e+030\n" +
                 "c3                                  0         -1e+030          1e+030\n" +
-                "c4                                  0               1               2\n" +
+                "c4                                  0           1.001               2\n" +
                 "c5                                  0         -1e+030          1e+030\n" +
-                "c6                                 -1               1               5\n" +
+                "c6                                 -1           1.001               5\n" +
                 "c7                                  0         -1e+030          1e+030\n" +
                 "c8                                  0         -1e+030          1e+030\n" +
                 "z1                                  0         -1e+030          1e+030\n" +
-                "z2                                  1               0               1\n" +
+                "z2                                  1               0           0.999\n" +
                 "y1                                  0         -1e+030          1e+030\n" +
                 "y2                                  0         -1e+030          1e+030\n";
 
@@ -241,29 +241,29 @@ class LpsolveTest {
                 "c2               1        0        1        0 >=        5\n" +
                 "c3               0        1        0       -1 >=       -2\n" +
                 "c4               0        1        0        1 >=        2\n" +
-                "c5               0        0        1        0 >=        1\n" +
-                "c6               0        0        1        0 <=        3\n" +
-                "c7               0        0        0        1 >=        1\n" +
-                "c8               0        0        0        1 <=        3\n" +
+                "c5               0        0        1        0 >=    1.001\n" +
+                "c6               0        0        1        0 <=    2.999\n" +
+                "c7               0        0        0        1 >=    1.001\n" +
+                "c8               0        0        0        1 <=    2.999\n" +
                 "Type          Real     Real     Real     Real \n" +
                 "upbo           Inf      Inf      Inf      Inf \n" +
                 "lowbo            0        0        0        0 \n" +
                 "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n" +
                 "\n" +
                 "Actual values of the constraints:\n" +
-                "c1                             -1\n" +
+                "c1                         -0.998\n" +
                 "c2                              5\n" +
                 "c3                             -2\n" +
                 "c4                              2\n" +
-                "c5                              3\n" +
-                "c6                              3\n" +
+                "c5                          2.999\n" +
+                "c6                          2.999\n" +
                 "c7                              2\n" +
                 "c8                              2\n" +
                 "\n" +
@@ -277,15 +277,15 @@ class LpsolveTest {
                 "Dual values with from - till limits:\n" +
                 "                           Dual value            From            Till\n" +
                 "c1                                  0         -1e+030          1e+030\n" +
-                "c2                                  1               3          1e+030\n" +
+                "c2                                  1           2.999          1e+030\n" +
                 "c3                                  0         -1e+030          1e+030\n" +
-                "c4                                  0               1               2\n" +
+                "c4                                  0           1.001               2\n" +
                 "c5                                  0         -1e+030          1e+030\n" +
-                "c6                                 -1               1               5\n" +
+                "c6                                 -1           1.001               5\n" +
                 "c7                                  0         -1e+030          1e+030\n" +
                 "c8                                  0         -1e+030          1e+030\n" +
                 "z1                                  0         -1e+030          1e+030\n" +
-                "z2                                  1               0               1\n" +
+                "z2                                  1               0           0.999\n" +
                 "y1                                  0         -1e+030          1e+030\n" +
                 "y2                                  0         -1e+030          1e+030\n";
 
@@ -306,29 +306,29 @@ class LpsolveTest {
                 "c2               1        0        1        0 >=        5\n" +
                 "c3               0        1        0       -1 >=       -2\n" +
                 "c4               0        1        0        1 >=        2\n" +
-                "c5               0        0        1        0 >=        1\n" +
-                "c6               0        0        1        0 <=        3\n" +
-                "c7               0        0        0        1 >=        1\n" +
-                "c8               0        0        0        1 <=        3\n" +
+                "c5               0        0        1        0 >=    1.001\n" +
+                "c6               0        0        1        0 <=    2.999\n" +
+                "c7               0        0        0        1 >=    1.001\n" +
+                "c8               0        0        0        1 <=    2.999\n" +
                 "Type          Real     Real     Real     Real \n" +
                 "upbo           Inf      Inf      Inf      Inf \n" +
                 "lowbo            0        0        0        0 \n" +
                 "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n" +
                 "\n" +
                 "Actual values of the constraints:\n" +
-                "c1                             -1\n" +
+                "c1                         -0.998\n" +
                 "c2                              5\n" +
                 "c3                             -2\n" +
                 "c4                              2\n" +
-                "c5                              3\n" +
-                "c6                              3\n" +
+                "c5                          2.999\n" +
+                "c6                          2.999\n" +
                 "c7                              2\n" +
                 "c8                              2\n" +
                 "\n" +
@@ -342,15 +342,15 @@ class LpsolveTest {
                 "Dual values with from - till limits:\n" +
                 "                           Dual value            From            Till\n" +
                 "c1                                  0         -1e+030          1e+030\n" +
-                "c2                                  1               3          1e+030\n" +
+                "c2                                  1           2.999          1e+030\n" +
                 "c3                                  0         -1e+030          1e+030\n" +
-                "c4                                  0               1               2\n" +
+                "c4                                  0           1.001               2\n" +
                 "c5                                  0         -1e+030          1e+030\n" +
-                "c6                                 -1               1               5\n" +
+                "c6                                 -1           1.001               5\n" +
                 "c7                                  0         -1e+030          1e+030\n" +
                 "c8                                  0         -1e+030          1e+030\n" +
                 "z1                                  0         -1e+030          1e+030\n" +
-                "z2                                  1               0               1\n" +
+                "z2                                  1               0           0.999\n" +
                 "y1                                  0         -1e+030          1e+030\n" +
                 "y2                                  0         -1e+030          1e+030\n";
 
@@ -371,29 +371,29 @@ class LpsolveTest {
                 "c2               1        0        1        0 >=        5\n" +
                 "c3               0        1        0       -1 >=       -2\n" +
                 "c4               0        1        0        1 >=        2\n" +
-                "c5               0        0        1        0 >=        1\n" +
-                "c6               0        0        1        0 <=        3\n" +
-                "c7               0        0        0        1 >=        1\n" +
-                "c8               0        0        0        1 <=        3\n" +
+                "c5               0        0        1        0 >=    1.001\n" +
+                "c6               0        0        1        0 <=    2.999\n" +
+                "c7               0        0        0        1 >=    1.001\n" +
+                "c8               0        0        0        1 <=    2.999\n" +
                 "Type          Real     Real     Real     Real \n" +
                 "upbo           Inf      Inf      Inf      Inf \n" +
                 "lowbo            0        0        0        0 \n" +
                 "\n" +
-                "Value of objective function: 2.00000000\n" +
+                "Value of objective function: 2.00100000\n" +
                 "\n" +
                 "Actual values of the variables:\n" +
-                "z1                              2\n" +
+                "z1                          2.001\n" +
                 "z2                              0\n" +
-                "y1                              3\n" +
+                "y1                          2.999\n" +
                 "y2                              2\n" +
                 "\n" +
                 "Actual values of the constraints:\n" +
-                "c1                             -1\n" +
+                "c1                         -0.998\n" +
                 "c2                              5\n" +
                 "c3                             -2\n" +
                 "c4                              2\n" +
-                "c5                              3\n" +
-                "c6                              3\n" +
+                "c5                          2.999\n" +
+                "c6                          2.999\n" +
                 "c7                              2\n" +
                 "c8                              2\n" +
                 "\n" +
@@ -407,29 +407,29 @@ class LpsolveTest {
                 "Dual values with from - till limits:\n" +
                 "                           Dual value            From            Till\n" +
                 "c1                                  0         -1e+030          1e+030\n" +
-                "c2                                  1               3          1e+030\n" +
+                "c2                                  1           2.999          1e+030\n" +
                 "c3                                  0         -1e+030          1e+030\n" +
-                "c4                                  0               1               2\n" +
+                "c4                                  0           1.001               2\n" +
                 "c5                                  0         -1e+030          1e+030\n" +
-                "c6                                 -1               1               5\n" +
+                "c6                                 -1           1.001               5\n" +
                 "c7                                  0         -1e+030          1e+030\n" +
                 "c8                                  0         -1e+030          1e+030\n" +
                 "z1                                  0         -1e+030          1e+030\n" +
-                "z2                                  1               0               1\n" +
+                "z2                                  1               0           0.999\n" +
                 "y1                                  0         -1e+030          1e+030\n" +
                 "y2                                  0         -1e+030          1e+030\n" +
                 "\n" +
                 "Tableau at iter 3:\n" +
                 "              6              8            -10              2\n" +
-                "  5     -1.0000000      0.0000000     -2.0000000      0.0000000      4.0000000\n" +
-                "  3      0.0000000      0.0000000      1.0000000      0.0000000      3.0000000\n" +
+                "  5     -1.0000000      0.0000000     -2.0000000      0.0000000      4.0020000\n" +
+                "  3      0.0000000      0.0000000      1.0000000      0.0000000      2.9990000\n" +
                 "  7      0.0000000      1.0000000      0.0000000     -2.0000000      0.0000000\n" +
                 "  4      0.0000000     -1.0000000      0.0000000      1.0000000      2.0000000\n" +
-                "  9      0.0000000      0.0000000      1.0000000      0.0000000      2.0000000\n" +
-                "  1     -1.0000000      0.0000000     -1.0000000      0.0000000      2.0000000\n" +
-                " 11      0.0000000     -1.0000000      0.0000000      1.0000000      1.0000000\n" +
-                "-12      0.0000000      1.0000000      0.0000000     -1.0000000      1.0000000\n" +
-                "        -1.0000000      0.0000000     -1.0000000     -1.0000000      2.0000000\n";
+                "  9      0.0000000      0.0000000      1.0000000      0.0000000      1.9980000\n" +
+                "  1     -1.0000000      0.0000000     -1.0000000      0.0000000      2.0010000\n" +
+                " 11      0.0000000     -1.0000000      0.0000000      1.0000000      0.9990000\n" +
+                "-12      0.0000000      1.0000000      0.0000000     -1.0000000      0.9990000\n" +
+                "        -1.0000000      0.0000000     -1.0000000     -1.0000000      2.0010000\n";
 
         Assertions.assertEquals(res, solver1.getOutput());
     }

@@ -1,0 +1,3 @@
+min
+// fonction
+5 2

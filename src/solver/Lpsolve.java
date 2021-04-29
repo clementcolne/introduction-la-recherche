@@ -12,9 +12,10 @@ public class Lpsolve extends AbstractSolver {
      * @param filePath chemin du fichier
      * @param options  options du solveur
      */
-    public Lpsolve(String filePath, String options, String solver) {
-        super(filePath, options, solver);
+    public Lpsolve(String filePath, String options) {
+        super(filePath, options);
         extension = ".lp";
+        this.solver = getClass().getClassLoader().getResource("programmes/lp_solve.exe").getPath();
         solverFile = "output"+File.separatorChar+"user_solution.lp";
     }
 
@@ -27,6 +28,7 @@ public class Lpsolve extends AbstractSolver {
             File file = new File(filePath);
             Scanner myReader = new Scanner(file);
             int cpt = 1;
+
             // On créé un fichier lp grâce aux informations du fichier texte
             while(myReader.hasNext()){
                 String data = myReader.nextLine();
@@ -43,6 +45,7 @@ public class Lpsolve extends AbstractSolver {
                     String[] dataTab = data.split(" ");
                     nbVariables = dataTab.length;
                     int i = 0;
+
                     // On écrit la fonction
                     for (String s : dataTab) {
                         myWriter.write("x"+(i+1));
@@ -83,6 +86,7 @@ public class Lpsolve extends AbstractSolver {
                     myWriter.write(";\n");
                 }
             }
+
             myWriter.close();
         } catch (IOException e) {
             System.out.println("An error occurred.");
@@ -95,8 +99,8 @@ public class Lpsolve extends AbstractSolver {
      */
     public void parseOutput(){
         StringBuilder stringBuilder = new StringBuilder();
-        int start = 0;
-        int end = 0;
+        nouvelleFctCout = new float[nbVariables];
+        int cpt = 1;
         StringBuilder function = new StringBuilder();
         String optimisation = "";
         boolean infeasible = false, unbounded = false, right = false;
@@ -109,6 +113,15 @@ public class Lpsolve extends AbstractSolver {
                 infeasible = true;
             } else if (s.matches(".*unbounded.*")) { // On vérifie si le problème est borné
                 unbounded = true;
+            } else if (s.matches(".*objective.*")) {
+                // On sépare les mots de la ligne
+                String[] objectiveLine = s.split(" ");
+                //On récupère la solution optimale du problème
+                valOptimal = Float.parseFloat(objectiveLine[objectiveLine.length-1]);
+                right = true;
+            } else if (s.matches("^y.*")) {
+                String[] objectiveFunction = s.split(" ");
+                nouvelleFctCout[cpt] = Float.parseFloat(objectiveFunction[objectiveFunction.length-1]);
             } else { // La solution convient
                 right = true;
             }
@@ -126,7 +139,7 @@ public class Lpsolve extends AbstractSolver {
                 // On réécrit la fonction de coût
                 myWriter.write(myReader.nextLine());
                 myWriter.write("\n");
-                int cpt = 0;
+                cpt = 0;
                 // On termine en écrivant les contraintes
                 while (myReader.hasNextLine()) {
                     // On passe les contrainte fixant les valeurs des variables

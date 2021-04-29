@@ -8,22 +8,23 @@ public abstract class AbstractSolver {
     protected String solverFile;
     protected final String newSolverFile;
     protected final String options;
-    protected final String solver;
+    protected String solver;
     private Process proc;
     protected String output;
     protected int nbVariables;
     protected String extension;
     protected static double epsilon;
+    protected float valOptimal;
+    protected float[] nouvelleFctCout;
 
     /**
      * Constructeur général de solveur de programme linéaire
      * @param filePath chemin du fichier
      * @param options options du solveur
      */
-    public AbstractSolver(String filePath, String options, String solver) {
+    public AbstractSolver(String filePath, String options) {
         this.filePath = filePath;
         this.options = options;
-        this.solver = getClass().getClassLoader().getResource("programmes/"+solver+".exe").getPath();
         this.solverFile = "";
         this.newSolverFile = "output"+File.separatorChar+"final_result";
         this.nbVariables = 0;
@@ -110,5 +111,9 @@ public abstract class AbstractSolver {
 
     public int getNbVariables() {
         return nbVariables;
+    }
+
+    public float getValOptimal() {
+        return valOptimal;
     }
 }

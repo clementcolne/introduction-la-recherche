@@ -1,5 +1,8 @@
 package evaluation;
 
+import solver.AbstractSolver;
+import solver.Lpsolve;
+
 import java.util.List;
 import java.util.Random;
 
@@ -13,15 +16,15 @@ public class Evaluation {
     private float [] x;
     private float [][] MRU;
     private int maxValue = 200;
+    private AbstractSolver solver;
 
     public Evaluation(int n) {
         xOptimal = new float[n];
         y = new float[n];
         x = new float[n];
         this.n = n;
-
+        solver = new Lpsolve("src/evaluation/eval.txt", "");
     }
-
 
     /**
      * Démarre l'évaluation de la méthode
@@ -38,6 +41,7 @@ public class Evaluation {
     /**
      * Génère une nouvelle contrainte aléatoire
      * TODO : vérifier que MRU reste cohérent
+     * TODO : faire en sorte que xOptimal soit l'optimal
      * @param numContrainte numéro de la contrainte ajoutée
      */
     private void randomContrainte(int numContrainte){
@@ -80,5 +84,13 @@ public class Evaluation {
             System.out.print(y[i]+" ");
         }
         System.out.println("satisfait MRU");*/
+    }
+
+    /**
+     * Redéfinit la nouvelle fonction de coût calculée dans le fichier eval.txt
+     * @param nbContrainte nombre de contrainte écrites dans le fichier
+     */
+    private void reecritureFonction(int nbContrainte){
+
     }
 }
