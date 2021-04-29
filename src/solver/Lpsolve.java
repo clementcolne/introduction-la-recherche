@@ -146,10 +146,10 @@ public class Lpsolve extends AbstractSolver {
 
             retryLpFile();
         }
-        if (unbounded) { // On vérifie si le problème est borné
+        else if (unbounded) { // On vérifie si le problème est borné
             System.out.println("The problem is unbounded");
         }
-        if (right){ // La solution convient
+        else if (right){ // La solution convient
             System.out.println("The solution is in MRU");
         }
     }

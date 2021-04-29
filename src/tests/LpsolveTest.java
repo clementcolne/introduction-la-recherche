@@ -10,6 +10,10 @@ import java.io.IOException;
 class LpsolveTest {
 
     private AbstractSolver solver1;
+    private AbstractSolver solver2;
+    private Lpsolve solver3;
+    private Lpsolve solver4;
+    private AbstractSolver solver5;
     private AbstractSolver solver6;
     private AbstractSolver solver7;
     private AbstractSolver solver8;
@@ -17,25 +21,25 @@ class LpsolveTest {
     private AbstractSolver solver10;
     private AbstractSolver solver11;
     private AbstractSolver solver12;
-    private AbstractSolver solver2;
-    private Lpsolve solver3;
-    private AbstractSolver solver5;
-    private Lpsolve solver4;
+    private AbstractSolver solver13;
+    private AbstractSolver solver14;
 
     @org.junit.jupiter.api.BeforeEach
     void setUp() {
-        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S7", "lp_solve");
+        solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S7", "lp_solve");
         solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
         solver3 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"testWrong.txt", "-S7", "lp_solve");
         solver4 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7", "lp_solve");
         solver5 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrong_path.txt", "-S7", "lp_solve");
-        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "", "lp_solve");
-        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S1", "lp_solve");
-        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S2", "lp_solve");
-        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S3", "lp_solve");
-        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S4", "lp_solve");
-        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S5", "lp_solve");
-        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "test.txt", "-S6", "lp_solve");
+        solver6 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "", "lp_solve");
+        solver7 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S1", "lp_solve");
+        solver8 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S2", "lp_solve");
+        solver9 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S3", "lp_solve");
+        solver10 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S4", "lp_solve");
+        solver11 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S5", "lp_solve");
+        solver12 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S6", "lp_solve");
+        solver13 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongMRU.txt", "", "lp_solve");
+        solver14 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "rightFunction.txt", "", "lp_solve");
     }
 
     @org.junit.jupiter.api.Test
@@ -93,7 +97,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultNoOption() throws IOException {
+    void WrongFunctionNoOption() throws IOException {
         solver6.createSolverFile();
         solver6.run();
         solver6.display();
@@ -112,7 +116,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS1Option() throws IOException {
+    void WrongFunctionS1Option() throws IOException {
         solver7.createSolverFile();
         solver7.run();
         solver7.display();
@@ -125,7 +129,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS2Option() throws IOException {
+    void WrongFunctionS2Option() throws IOException {
         solver8.createSolverFile();
         solver8.run();
         solver8.display();
@@ -144,7 +148,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS3Option() throws IOException {
+    void WrongFunctionS3Option() throws IOException {
         solver9.createSolverFile();
         solver9.run();
         solver9.display();
@@ -173,7 +177,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS4Option() throws IOException {
+    void WrongFunctionS4Option() throws IOException {
         solver10.createSolverFile();
         solver10.run();
         solver10.display();
@@ -224,7 +228,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS5Option() throws IOException {
+    void WrongFunctionS5Option() throws IOException {
         solver11.createSolverFile();
         solver11.run();
         solver11.display();
@@ -289,7 +293,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS6Option() throws IOException {
+    void WrongFunctionS6Option() throws IOException {
         solver12.createSolverFile();
         solver12.run();
         solver12.display();
@@ -354,7 +358,7 @@ class LpsolveTest {
     }
 
     @org.junit.jupiter.api.Test
-    void RightResultS7Option() throws IOException {
+    void WrongFunctionS7Option() throws IOException {
         solver1.createSolverFile();
         solver1.run();
         solver1.display();
@@ -428,5 +432,34 @@ class LpsolveTest {
                 "        -1.0000000      0.0000000     -1.0000000     -1.0000000      2.0000000\n";
 
         Assertions.assertEquals(res, solver1.getOutput());
+    }
+
+
+    @org.junit.jupiter.api.Test
+    void testWrongMRU() throws IOException {
+        solver13.createSolverFile();
+        solver13.run();
+        solver13.display();
+        solver13.parseOutput();
+
+        String res = "This problem is infeasible\n";
+
+        Assertions.assertEquals(res, solver13.getOutput());
+    }
+
+    @org.junit.jupiter.api.Test
+    void testRightFunction() throws IOException {
+        solver14.createSolverFile();
+        solver14.run();
+        solver14.display();
+        solver14.parseOutput();
+
+        String res = "\nValue of objective function: 4.00000000\n" +
+                "\n" +
+                "Actual values of the variables:\n" +
+                "x1                              2\n" +
+                "x2                              2\n";
+
+        Assertions.assertEquals(res, solver14.getOutput());
     }
 }
