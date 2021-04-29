@@ -24,7 +24,7 @@ Java 1.8
 
 Liste des différents solveurs compatibles avec l'interface :
 
-* lp_solve
+* lp_solve version 5.5.2.11
 
 ## Exécution
 
@@ -59,9 +59,13 @@ La structure du fichier texte est adaptée à l’utilisation de lp_solve, mais 
 
 ## Explication des programmes
 
-```
-TODO : Coco ici faut que tu expliques tes programmes
-```
+La classe AbstractSolver permet de regrouper les méthodes communes aux différents solveurs,
+comme la méthode run, qui sert à lancer l'exécutable du solver, ou display qui permet
+de récupérer et d'afficher la sortie standard du solver.
+La classe Lpsolve contient les méthodes plus spécifiques au solveur lp_solve. Cette classe
+contient les méthodes permettant de créer un fichier lp avec les informations de base. Elle
+contient aussi les méthodes permettant d'analyser les différents fichiers, de calculer la plus
+courte distance ou d'afficher le résultat.
 
 ## Exemple d'exécution
 
