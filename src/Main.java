@@ -1,3 +1,4 @@
+import evaluation.Evaluation;
 import solver.AbstractSolver;
 import solver.Lpsolve;
 
@@ -7,6 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         if(args.length <= 1) {
+            Evaluation e = new Evaluation(2);
+            e.evaluer(5);
             System.err.println("Error missing argument : Please, specify the file path and solver executable\n[solver] <file path> [solver options]");
             System.exit(0);
         }
@@ -25,7 +28,7 @@ public class Main {
 
         switch (solveur) {
             case "lp_solve":
-                solver = new Lpsolve(filePath, options, solveur);
+                solver = new Lpsolve(filePath, options);
                 break;
             default:
                 System.err.println("Error unknown solver : Please");

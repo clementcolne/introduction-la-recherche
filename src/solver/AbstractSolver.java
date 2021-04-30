@@ -16,6 +16,7 @@ public abstract class AbstractSolver {
     protected static double epsilon;
     protected float valOptimal;
     protected float[] nouvelleFctCout;
+    protected String statut;
 
     /**
      * Constructeur général de solveur de programme linéaire
@@ -23,6 +24,7 @@ public abstract class AbstractSolver {
      * @param options options du solveur
      */
     public AbstractSolver(String filePath, String options) {
+        this.statut = "right";
         this.filePath = filePath;
         this.options = options;
         this.solverFile = "";
@@ -75,6 +77,18 @@ public abstract class AbstractSolver {
         }
     }
 
+    public void setStatutInfeasible() {
+        this.statut = "infeasible";
+    }
+
+    public void setStatutUnbounded() {
+        this.statut = "unbounded";
+    }
+
+    public void setStatutRight() {
+        this.statut = "right";
+    }
+
     /**
      * Méthode permettant de récupérer les valeurs optimales et réalisables du programme linéaire
      */
@@ -115,5 +129,13 @@ public abstract class AbstractSolver {
 
     public float getValOptimal() {
         return valOptimal;
+    }
+
+    public float[] getNouvelleFctCout() {
+        return nouvelleFctCout;
+    }
+
+    public String getStatut() {
+        return statut;
     }
 }

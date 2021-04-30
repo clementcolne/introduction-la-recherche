@@ -110,19 +110,25 @@ public class Lpsolve extends AbstractSolver {
         for (String s : lpOutput) {
             // Le problème n'est pas faisable (la solution n'est pas réalisable ou MRU est incohérent)
             if (s.matches(".*infeasible.*")) {
+                setStatutInfeasible();
                 infeasible = true;
             } else if (s.matches(".*unbounded.*")) { // On vérifie si le problème est borné
+                setStatutUnbounded();
                 unbounded = true;
             } else if (s.matches(".*objective.*")) {
+                setStatutRight();
                 // On sépare les mots de la ligne
                 String[] objectiveLine = s.split(" ");
                 //On récupère la solution optimale du problème
                 valOptimal = Float.parseFloat(objectiveLine[objectiveLine.length-1]);
                 right = true;
             } else if (s.matches("^y.*")) {
+                setStatutRight();
                 String[] objectiveFunction = s.split(" ");
                 nouvelleFctCout[cpt] = Float.parseFloat(objectiveFunction[objectiveFunction.length-1]);
+                right = true;
             } else { // La solution convient
+                setStatutRight();
                 right = true;
             }
         }
@@ -260,7 +266,7 @@ public class Lpsolve extends AbstractSolver {
                         int i = 0;
                         // On écrit la fonction
                         for (String s : dataTab) {
-                            if (s.matches("x[0-9]*")) {
+                            if (s.matches("-?[0-9]*(\\.[0-9]*)?x[0-9]*")) {
                                 s = s.replace("x", "y");
                             }
                             stringBuilder.append(s);
