@@ -62,7 +62,7 @@ class LpsolveTest {
         Assertions.assertTrue(file3.exists());
     }
 
-    /*@Test(expected = FileNotFoundException.class)
+    /*@Test
     void testcreateSolverFileWrong() {
         Assertions.assertThrows(FileNotFoundException.class, () ->
             solver5.createSolverFile(),
