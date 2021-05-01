@@ -34,7 +34,7 @@ Ligne de commande pour lancer l'archive jar :
 java -jar jarName.jar solver file_path [solve_ options]
 ```
 
-*[solver] doit être remplacer par un des solveurs de la liste "Solveurs disponibles".*
+*[solver] doit être remplacé par un des solveurs de la liste "Solveurs disponibles".*
 
 ## Format de fichier
 Le fichier doit être un fichier texte au format pour être utilisé avec lp_solve :
