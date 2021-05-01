@@ -133,8 +133,8 @@ public class Lpsolve extends AbstractSolver {
             }
         }
         if (infeasible) {
-            System.out.println("This problem is infeasible");
-            System.out.println(("\nTrying to optimize the solution :\n"));
+            System.out.println("Problème infaisable");
+            System.out.println(("\nOptimisation de la solution :\n"));
 
             // On écrit un nouveau fichier lp pour retrouver une fonction de coût optimisée
             try {
@@ -142,19 +142,22 @@ public class Lpsolve extends AbstractSolver {
                 File file = new File(solverFile);
                 Scanner myReader = new Scanner(file);
 
-                // On réécrit la fonction de coût
-                myWriter.write(myReader.nextLine());
-                myWriter.write("\n");
-                cpt = 0;
-                // On termine en écrivant les contraintes
-                while (myReader.hasNextLine()) {
-                    // On passe les contrainte fixant les valeurs des variables
-                    if (cpt < nbVariables) {
-                        cpt++;
-                        myReader.nextLine();
-                    } else { // On réécrit le reste du fichier
-                        myWriter.write(myReader.nextLine());
-                        myWriter.write("\n");
+                if (myReader.hasNextLine()) {
+
+                    // On réécrit la fonction de coût
+                    myWriter.write(myReader.nextLine());
+                    myWriter.write("\n");
+                    cpt = 0;
+                    // On termine en écrivant les contraintes
+                    while (myReader.hasNextLine()) {
+                        // On passe les contrainte fixant les valeurs des variables
+                        if (cpt < nbVariables) {
+                            cpt++;
+                            myReader.nextLine();
+                        } else { // On réécrit le reste du fichier
+                            myWriter.write(myReader.nextLine());
+                            myWriter.write("\n");
+                        }
                     }
                 }
                 myWriter.close();
@@ -166,10 +169,10 @@ public class Lpsolve extends AbstractSolver {
             retryLpFile();
         }
         else if (unbounded) { // On vérifie si le problème est borné
-            System.out.println("The problem is unbounded");
+            System.out.println("Le problème n'est pas borné");
         }
         else if (right){ // La solution convient
-            System.out.println("The solution is in MRU");
+            System.out.println("La solution est dans MRU");
         }
     }
 

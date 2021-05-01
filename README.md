@@ -31,7 +31,7 @@ Liste des différents solveurs compatibles avec l'interface :
 Ligne de commande pour lancer l'archive jar :
 
 ```
-java -jar jarName.jar [solver] <file path> /[solver options]
+java -jar jarName.jar solver file_path [solve_ options]
 ```
 
 *[solver] doit être remplacer par un des solveurs de la liste "Solveurs disponibles".*
