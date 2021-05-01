@@ -182,6 +182,7 @@ public class Lpsolve extends AbstractSolver {
             run();
             display();
             analyzeLpFile();
+            solverFile = "output"+File.separatorChar+"user_solution.lp";
         } catch (IOException e) {
             e.printStackTrace();
         }

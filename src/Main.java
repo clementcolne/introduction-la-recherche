@@ -7,12 +7,13 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
+
+        //On lance la partie évaluation
         if(args.length <= 1) {
             Evaluation e = new Evaluation(2);
             e.evaluer(5);
-            System.err.println("Error missing argument : Please, specify the file path and solver executable\n[solver] <file path> [solver options]");
-            System.exit(0);
         }
+
         // Récupération du nom de l'exécutable du solveur
         String solveur = args[0];
         // récupération du fichier texte
