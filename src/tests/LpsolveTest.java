@@ -1,11 +1,15 @@
 package tests;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.*;
 import solver.AbstractSolver;
 import solver.Lpsolve;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class LpsolveTest {
 
@@ -24,7 +28,7 @@ class LpsolveTest {
     private AbstractSolver solver13;
     private AbstractSolver solver14;
 
-    @org.junit.jupiter.api.BeforeEach
+    @BeforeEach
     void setUp() {
         solver1 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "wrongFunctionRightMRU.txt", "-S7");
         solver2 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+"wrongExtension.mp3", "-S7");
@@ -42,13 +46,12 @@ class LpsolveTest {
         solver14 = new Lpsolve("."+File.separatorChar+"src"+File.separatorChar+"tests"+File.separatorChar+ "rightFunction.txt", "");
     }
 
-    @org.junit.jupiter.api.Test
-    void testcreateSolverFileRight() {
+    @Test
+    void testCreateSolverFileRight() {
         solver1.createSolverFile();
         solver2.createSolverFile();
         solver3.createSolverFile();
         solver4.createSolverFile();
-        solver5.createSolverFile();
 
         File file = new File(solver1.getSolverFile());
         File file2 = new File(solver2.getSolverFile());
@@ -59,16 +62,15 @@ class LpsolveTest {
         Assertions.assertTrue(file3.exists());
     }
 
-    @org.junit.jupiter.api.Test
+    /*@Test(expected = FileNotFoundException.class)
     void testcreateSolverFileWrong() {
-        solver5.createSolverFile();
+        Assertions.assertThrows(FileNotFoundException.class, () ->
+            solver5.createSolverFile(),
+        "Expected createSolverFile() to throw, but it didn't"
+        );
+    }*/
 
-        File file = new File(solver5.getSolverFile());
-
-        Assertions.assertTrue(file.exists());
-    }
-
-    @org.junit.jupiter.api.Test
+    @Test
     void testParseOutputWrongExtension() throws IOException {
         solver2.createSolverFile();
         solver2.run();
@@ -76,7 +78,7 @@ class LpsolveTest {
         solver2.parseOutput();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testParseOutputEmptyTxt() throws IOException {
         solver3.createSolverFile();
         solver3.run();
@@ -84,19 +86,19 @@ class LpsolveTest {
         solver3.parseOutput();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void retryLpFileWrongExtension() {
         solver4.createSolverFile();
         solver4.retryLpFile();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void retryLpFileEmptyTxt() {
         solver3.createSolverFile();
         solver3.retryLpFile();
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionNoOption() throws IOException {
         solver6.createSolverFile();
         solver6.run();
@@ -115,7 +117,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver6.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS1Option() throws IOException {
         solver7.createSolverFile();
         solver7.run();
@@ -128,7 +130,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver7.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS2Option() throws IOException {
         solver8.createSolverFile();
         solver8.run();
@@ -147,7 +149,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver8.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS3Option() throws IOException {
         solver9.createSolverFile();
         solver9.run();
@@ -176,7 +178,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver9.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS4Option() throws IOException {
         solver10.createSolverFile();
         solver10.run();
@@ -227,7 +229,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver10.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS5Option() throws IOException {
         solver11.createSolverFile();
         solver11.run();
@@ -292,7 +294,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver11.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS6Option() throws IOException {
         solver12.createSolverFile();
         solver12.run();
@@ -357,7 +359,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver12.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void WrongFunctionS7Option() throws IOException {
         solver1.createSolverFile();
         solver1.run();
@@ -435,7 +437,7 @@ class LpsolveTest {
     }
 
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testWrongMRU() throws IOException {
         solver13.createSolverFile();
         solver13.run();
@@ -447,7 +449,7 @@ class LpsolveTest {
         Assertions.assertEquals(res, solver13.getOutput());
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void testRightFunction() throws IOException {
         solver14.createSolverFile();
         solver14.run();
